@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 
@@ -10,6 +11,14 @@ Category model. This model consists of a name field and a unique slug field
 class Category(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
+
+
+    # Add absolute URL to the product_list.
+    # 'get_absolute_url' is a convention for retrieving of the URL for the given object
+    def get_absolute_url(self):
+        return reverse(
+            'shop:product_list_by_category', args=[self.slug]
+        )
 
     """
     Define the index for the name field
@@ -45,14 +54,14 @@ class Product(models.Model):
     available = models.BooleanField(default=True) # Boolean to display if the product available or not
     created = models.DateTimeField(auto_now_add=True) # date of creation
     updated = models.DateTimeField(auto_now=True) # date of updating
-
-    # coffee-specific products
     size = models.CharField(max_length=50, choices=[('small', 'Small'), ('medium', 'Medium'), ('large', 'Large')],
                             default='medium')
     temperature = models.CharField(max_length=50, choices=[('hot', 'Hot'), ('cold', 'Cold')], default='hot')
     vegan = models.BooleanField(default=False)
     gluten_free = models.BooleanField(default=False)
 
+    def get_absolute_url(self):
+        return reverse('shop:product_detail', args=[self.id, self.slug])
     """
     Define a multiple field index for the id and slug fields indexed together as we plan to query products by both id and slug; one to many relationship.
     """
