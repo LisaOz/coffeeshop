@@ -74,12 +74,12 @@ thead th, tbody tr.total {
     font-weight: bold;
 }
 
-/* Tray */
-table.tray {
+/* Cart */
+table.cart {
     margin-bottom: 40px;
 }
 
-table.tray img {
+table.cart img {
     width: 180px;
 }
 
@@ -138,8 +138,8 @@ ul.errorlist {
     overflow: auto;
 }
 
-/* Tray */
-#subheader .tray {
+/* Cart */
+#subheader .cart {
     float: right;
     padding-top: 4px;
 }

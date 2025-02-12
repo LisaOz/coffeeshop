@@ -126,3 +126,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # URLS for media files
 MEDIA_URL = 'media/' # base URL that serves media files uploaded by users
 MEDIA_ROOT = BASE_DIR / 'media' # local path were uploaded media files are located, to prepend to BASE_DIR dynamically
+
+
+# Create the KEY to store the cart in the user sessions
+CART_SESSION_ID = 'cart'
