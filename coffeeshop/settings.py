@@ -125,4 +125,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # URLS for media files
 MEDIA_URL = 'media/' # base URL that serves media files uploaded by users
-MEDIA_ROOT = BASE_DIR / 'media' # local path were uploaded media files are located, it is prepended to BASE_DIR dynamically
+MEDIA_ROOT = BASE_DIR / 'media' # local path were uploaded media files are located, to prepend to BASE_DIR dynamically

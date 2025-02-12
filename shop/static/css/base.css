@@ -74,12 +74,12 @@ thead th, tbody tr.total {
     font-weight: bold;
 }
 
-/* Cart */
-table.cart {
+/* Tray */
+table.tray {
     margin-bottom: 40px;
 }
 
-table.cart img {
+table.tray img {
     width: 180px;
 }
 

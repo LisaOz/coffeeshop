@@ -5,7 +5,7 @@
 {% load static %}
 
 {% block title %}
-{% if category %}{{ category_name }}{% else %}Products{% endif %}
+{% if category %}{{ category.name }}{% else %}Products{% endif %}
 {% endblock %}
 
 {% block content %}

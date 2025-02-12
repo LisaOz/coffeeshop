@@ -1,10 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
+{% load static %}
+<! DOCKTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>{% block title %}Coffee Shop{% endblock %}</title>
+        <link href="{% static 'css/base.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <div id="header">
+            <a href="/" class="logo">Coffee Shop</a>
+        </div>
+        <div id="subheader">
+            <div class="tray">
+                {% with total_items=tray|length %}
+                {% if total_items > 0 %}
+                    Your basket:
+                    <a href="{% url 'tray:tray_detail' %}">
+                        {{ total_items }} item{{ total_items|pluralize }}, £{{ tray.get_total_price }}
+                    </a>
+                {% elif not order %}
+                    Your tray is empty
+                    {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+        <div id="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
 </html>
