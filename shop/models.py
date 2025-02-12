@@ -15,6 +15,8 @@ class Category(models.Model):
 
     # Add absolute URL to the product_list.
     # 'get_absolute_url' is a convention for retrieving of the URL for the given object
+
+
     def get_absolute_url(self):
         return reverse(
             'shop:product_list_by_category', args=[self.slug]
