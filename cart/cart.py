@@ -66,11 +66,21 @@ class Cart:
             for product in products:
                 cart[str(product.id)]['product'] = product # each retrieved product is added to the cart copy
 
-            # Calculate prices
+            # Calculate prices for items in the cart
             for item in cart.values():
                 item['price'] = Decimal(item['price']) # convert the price do decimal
                 item['total_price'] = item['price'] * item['quantity']
                 yield item # yield is a keyword; returns each item in the cart one by one
+
+
+            """
+            Method to calculate the total cost of the items in the cart
+            """
+            def get_total_price(self):
+                return sum(
+                    Decimal(item['price']) * item['quantity']
+                    for item in self.cart.values()
+                )
 
 
             """
