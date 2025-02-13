@@ -48,5 +48,22 @@ class Cart:
                 self.save()  # update the cart in the session
 
 
+        """
+        Method to iterate through the items contained in the cart and access all products from the database
+        """
+        def __iter__(self):
+            product_ids = self.cart.keys() # self.cart is a dictionary with ID as key and price and name as values
+
+            products = Product.objects.filter(id__in=product_ids) # retrieve products  where the id matches  keys
+            cart = self.cart.copy() # copy the current cart in the variable to ensure original cart remains unchanged
+            for product in products:
+                cart[str(product.id)]['product'] = product # each retrieved product is added to the cart copy
+
+            # Calculate prices
+            for item in cart.values():
+                item['price'] = Decimal(item['price']) # convert the price do decimal
+                item['total_price'] = item['price'] * item['quantity']
+                yield item # yield is a keyword; returns each item in the cart one by one
+
 
 
