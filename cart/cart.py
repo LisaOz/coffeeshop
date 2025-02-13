@@ -73,4 +73,9 @@ class Cart:
                 yield item # yield is a keyword; returns each item in the cart one by one
 
 
-
+            """
+            Method to clear and the cart session and save it
+            """
+            def clear(self):
+                del self.session[settings.CART_SESSION_ID]
+                self.save()
