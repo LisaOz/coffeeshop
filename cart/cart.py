@@ -49,6 +49,13 @@ class Cart:
 
 
         """
+        Method to return the total number of items in the cart
+        """
+        def __len__(self):
+            return sum(item['quantity'] for item in self.cart.values())
+
+
+        """
         Method to iterate through the items contained in the cart and access all products from the database
         """
         def __iter__(self):
