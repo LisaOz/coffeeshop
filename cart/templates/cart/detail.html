@@ -28,7 +28,13 @@
                             </a>
                         </td>
                         <td class="product-name">{{ product.name }}</td>
-                        <td class="product-quantity">{{ item.quantity }}</td>
+                        <td class="product-quantity">
+                            <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                                {{ item.update_quantity_form.quantity }}
+                                {{ item.update_quantity_form.override }}
+                                 {% csrf_token %}
+                            </form>
+                        </td>
                         <td class="remove-item">
                             <form action="{% url 'cart:cart_remove' product.id %}" method="post">
                                 {% csrf_token %}
@@ -44,6 +50,15 @@
                     <td colspan="5" class="total-label" style="font-weight: bold; font-size: 1.2em;">Total:</td>
                     <td class="total-amount" style="font-weight: bold; font-size: 1.2em;">£{{ cart.get_total_price }}</td>
                 </tr>
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                document.querySelectorAll(".product-quantity form select, .product-quantity form input").forEach(function(element) {
+                element.addEventListener("change", function() {
+                this.form.submit();
+            });
+        });
+    });
+</script>
             </tbody>
         </table>
         <div class="cart-actions" style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
