@@ -48,4 +48,10 @@ View to display the cart with its contents
 
 def cart_detail(request):
     cart = Cart(request)
+    # iterate the items in the cart and allow the quantity of each to be changed
+    for item in cart:
+        item['update_quantity_form'] = FormToAddProduct(
+            initial={'quantity': item['quantity'], 'override': True} # allow to override the initial quantity
+        )
+
     return render(request, 'cart/detail.html', {'cart': cart})
