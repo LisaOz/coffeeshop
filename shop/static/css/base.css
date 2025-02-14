@@ -37,6 +37,15 @@ a.button:hover, input[type="submit"]:hover {
     background: #3e2723; /* Even darker brown */
 }
 
+.button.primary.checkout {
+    padding: 12px 20px;
+}
+
+.button.light {
+    padding: 12px 20px;"
+}
+
+
 /* Text alignment */
 .text-left {
     text-align: left;
@@ -302,4 +311,16 @@ style="font-weight: bold; font-size: 1.2em;"
     color: #4e342e; !important;  /* Force color to black */
     font-size: 16px;  /* font size */
     font-weight: bold;  /* weight */
+}
+
+.cart-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+
+body {
+    border: 2px solid red;
 }

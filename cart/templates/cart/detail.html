@@ -65,9 +65,9 @@
 </script>
             </tbody>
         </table>
-        <div class="cart-actions" style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
-            <a href="{% url 'shop:product_list' %}" class="button light" style="padding: 12px 20px;">Continue Shopping</a>
-            <a href="#" class="button primary" style="padding: 12px 20px;">Proceed to Checkout</a>
+        <div class="cart-actions">
+            <a href="{% url 'shop:product_list' %}" class="button light">Continue Shopping</a>
+            <a href="{% url 'orders:order_create' %}" class="button primary checkout">Proceed to Checkout</a>
         </div>
     {% else %}
         <p class="empty-cart">Your cart is empty. <a href="{% url 'shop:product_list' %}">Start shopping</a> now!</p>
