@@ -76,16 +76,16 @@ class Cart:
         """
         Method to calculate the total cost of the items in the cart
         """
-        def get_total_price(self):
-            return sum(
-                Decimal(item['price']) * item['quantity']
-                for item in self.cart.values()
-            )
+    def get_total_price(self):
+        return sum(
+            Decimal(item['price']) * item['quantity']
+            for item in self.cart.values()
+        )
 
 
-            """
-            Method to clear and the cart session and save it
-            """
-            def clear(self):
-                del self.session[settings.CART_SESSION_ID]
-                self.save()
+    """
+    Method to clear and the cart session and save it
+    """
+    def clear(self):
+        del self.session[settings.CART_SESSION_ID]
+        self.save()
