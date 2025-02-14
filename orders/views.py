@@ -11,6 +11,7 @@ View for the 'order_create'
 
 def order_create(request):
     cart = Cart(request)  # get the current cart from the session cart
+    form = OrderCreateForm() # to ensure 'form' is always defined
     if request.method == 'POST': # Validates the data sent in the request
         form = OrderCreateForm(request.POST)
         if form.is_valid():

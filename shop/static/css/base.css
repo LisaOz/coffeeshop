@@ -324,3 +324,93 @@ style="font-weight: bold; font-size: 1.2em;"
 body {
     border: 2px solid red;
 }
+
+.checkout-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+    max-width: 900px;
+    margin: auto;
+}
+
+
+.order-form-container {
+    flex: 1;
+}
+
+.order-form .form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 4px; /* gap between form fields */
+}
+
+.order-form .form-fields p {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2px; /* margin between fields */
+}
+
+.order-form input,
+.order-form select,
+.order-form textarea {
+    width: 80%;
+    padding: 6px; /* padding inside inputs */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.order-summary {
+    flex: 1;
+    background: #f9f9f9;
+    border: 2px solid red;
+    padding: 15px;
+    border-radius: 8px;
+    max-width: 280px;
+    position: relative;
+    top: 120px; /* align with First Name field */
+    left: 150px; /* align with upper values */
+}
+
+.order-summary h3 {
+    margin-top: 0;
+    text-align: center;
+}
+
+.order-items {
+    list-style: none;
+    padding: 0;
+}
+
+.order-items li {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.order-items li:last-child {
+    border-bottom: none;
+}
+
+.order-total {
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.btn-primary {
+    background: brown;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    border-radius: 5px;
+    width: 80%;
+}
+
+.btn-primary:hover {
+    background: darkred;
+}
