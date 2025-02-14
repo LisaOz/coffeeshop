@@ -24,7 +24,7 @@
                     <tr>
                         <td class="product-image" style="width: 125px;">
                             <a href="{{ product.get_absolute_url }}">
-                                <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" alt="{{ product.name }}" style="width: 100px; height: auto;">
+                                <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" alt="{{ product.name }}" style="width: 125px; height: auto;">
                             </a>
                         </td>
                         <td class="product-name">{{ product.name }}</td>
@@ -47,8 +47,8 @@
                     {% endwith %}
                 {% endfor %}
                 <tr class="cart-total">
-                    <td colspan="5" class="total-label" style="font-weight: bold; font-size: 1.2em;">Total:</td>
-                    <td class="total-amount" style="font-weight: bold; font-size: 1.2em;">£{{ cart.get_total_price }}</td>
+                    <td colspan="5" >Total:</td>
+                    <td class="total-amount" >£{{ cart.get_total_price }}</td>
                 </tr>
             <script>
                 document.addEventListener("DOMContentLoaded", function() {

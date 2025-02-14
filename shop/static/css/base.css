@@ -16,7 +16,7 @@ h1, h2, h3, h4, h5, h6 {
 
 a {
     text-decoration: none;
-    color: #8d6e63; /* Warm brown */
+    color: #8d6e68; /* Warm brown */
 }
 
 a:hover {
@@ -208,7 +208,7 @@ ul.errorlist {
 }
 
 .product-detail .price {
-    color: #5d4037;
+    color: #000000;
     font-size: 28px;
     font-weight: bold;
 }
@@ -264,4 +264,42 @@ footer {
     width: 270px;
     height: 250px;
     object-fit: cover;
+}
+
+/* Cart info */
+.cart-info {
+    font-weight: bold;
+    color: #000; /* text color: black */
+     visibility: visible;
+     opacity: 1;
+}
+
+/* Cart number and value */
+.cart-number, .cart-value {
+    font-weight: bold;
+    color: #000; /* black */
+    display: inline-block;
+    margin-right: 10px;
+}
+
+/* Set cart content to visible */
+.cart-number, .cart-value {
+    opacity: 1; /*  visible */
+
+}
+
+.cart-info:hover {
+    visibility: visible;  /* Ensures visibility when hovered */
+    opacity: 1;  /* Ensures full opacity when hovered */
+}
+
+/*
+class="total-label" style="font-weight: bold; font-size: 1.2em;"
+style="font-weight: bold; font-size: 1.2em;"
+*/
+
+.cart a {
+    color: #4e342e; !important;  /* Force color to black */
+    font-size: 16px;  /* font size */
+    font-weight: bold;  /* weight */
 }
