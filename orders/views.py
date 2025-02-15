@@ -27,6 +27,13 @@ def order_create(request):
 
             cart.clear() # Clear the cart
 
+            # redirect to the order created page
+            return render(
+                request, 'orders/order/created.html', {'order': order}
+            )
+    else:
+        form = OrderCreateForm()
+
 
     return render(
         request,

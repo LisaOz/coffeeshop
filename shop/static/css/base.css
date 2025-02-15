@@ -34,7 +34,7 @@ a.button, input[type="submit"] {
 }
 
 a.button:hover, input[type="submit"]:hover {
-    background: #3e2723; /* Even darker brown */
+    background: #3e2723; /* darker brown */
 }
 
 .button.primary.checkout {
@@ -42,7 +42,7 @@ a.button:hover, input[type="submit"]:hover {
 }
 
 .button.light {
-    padding: 12px 20px;"
+    padding: 12px 20px;
 }
 
 
@@ -246,18 +246,6 @@ ul.errorlist {
     font-size: 14px;
 }
 
-/* Recommendations */
-.recommendations {
-    clear: both;
-}
-
-.recommendations div {
-    float: left;
-}
-
-.recommendations img {
-    width: 200px;
-}
 
 /* Footer */
 footer {
@@ -342,13 +330,13 @@ body {
 .order-form .form-fields {
     display: flex;
     flex-direction: column;
-    gap: 4px; /* gap between form fields */
+    gap: 2px; /* gap between form fields */
 }
 
 .order-form .form-fields p {
     display: flex;
     flex-direction: column;
-    margin-bottom: 2px; /* margin between fields */
+    margin-bottom: 1px; /* margin between fields */
 }
 
 .order-form input,
@@ -366,7 +354,7 @@ body {
     border: 2px solid red;
     padding: 15px;
     border-radius: 8px;
-    max-width: 280px;
+    max-width: 380px;
     position: relative;
     top: 120px; /* align with First Name field */
     left: 150px; /* align with upper values */
