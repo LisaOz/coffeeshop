@@ -12,6 +12,7 @@ app = Celery('coffeeshop') # create an instance of the application
 
 # Load any custom configuration from the project settings, Celery namespace setting is needed
 app.config_from_object('django.conf:settings', namespace='CELERY')
+app.conf.broker_connection_retry_on_startup = True
 
 # Tell Celery to auto-discover asynchronous tasks for the application. Celery looks for a tasks.py file
 # in each app directory of apps added to INSTALLED_APP and load asynchronous tasks defined in it
