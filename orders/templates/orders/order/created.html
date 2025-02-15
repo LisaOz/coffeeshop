@@ -1,8 +1,35 @@
 {% extends "shop/base.html" %}
 
+{% load static %}
+
 {% block title %}Thank you{% endblock %}
 
 {% block content %}
     <h1>Thank you!</h1>
     <p>Your order has been successfully completed. Your order number is <strong>{{ order.id }}</strong></p>
+
+    <!-- Add Confetti Animation -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        window.onload = function() {
+            // Confetti animation
+            var end = Date.now() + (2 * 1500); // 2 seconds of animation
+            var colors = ['#ff0', '#ff5733', '#00ff00', '#00ffff', '#ff0099', '#800080']; // Candy-colored confetti
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: Math.random(), y: Math.random() },
+                    colors: colors
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            })();
+        };
+    </script>
+
 {% endblock %}
