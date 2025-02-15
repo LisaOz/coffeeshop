@@ -2,6 +2,7 @@ from cart.cart import Cart
 from django.shortcuts import render
 from .forms import OrderCreateForm
 from .models import OrderItem
+from .tasks import order_created
 
 
 """
@@ -27,7 +28,14 @@ def order_create(request):
 
             cart.clear() # Clear the cart
 
+            # Launch asynchronous task to send the email message (to the console) about the placed order.
+            # The delay() method of the task is called to execute it asynchronously. The task will be added
+            # to the message queue and executed by the Celery worker
+
+            order_created.delay(order.id)
+
             # redirect to the order created page
+            #
             return render(
                 request, 'orders/order/created.html', {'order': order}
             )
