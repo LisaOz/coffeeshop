@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls), # url for admin site
     path('cart/', include('cart.urls', namespace='cart')),  # this url is more restrictive, include it before shop.url
     path('orders/', include('orders.urls', namespace='orders')),
+    path('payment/', include('payment.urls', namespace='payment')),  # url pattern for the payment application
     path('', include('shop.urls', namespace='shop')),  # include URL path for the shop application
 ]
 
