@@ -37,6 +37,26 @@ class Order(models.Model):
         return sum(item.get_cost() for item in self.items.all())
 
 
+    """
+    Method to return the Stripe dashboard's URL for the payments associated with the order.
+    If no payment ID is stored in the stripe_id field of the Order, an empty string is returned.
+    """
+
+    def get_stripe_url(self):
+        if not self.stripe_id:
+            # if there is no associated payment
+            return ''
+        if '_test_' in settings.STRIPE_SECRET_KEY:
+            path = '/test/'  # Stripe path for test payments
+        else:
+            path = '/'  # Stripe path for real payments
+        return f'https:dashboard.stripe.com{path}payments/{self.stripe_id}'
+        # url = f'https://dashboard.stripe.com/test/payments/{obj.stripe_id}
+
+        # Patterns for payments in the production env: https://dashboard.stripe.com/payments/{id}
+        # test payments patterns:                      https://dashboard.stripe.com/payments/test/{id}
+
+
 """
 Model to store the product, quantity and price paid for each item
 """
