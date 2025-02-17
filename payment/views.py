@@ -42,6 +42,38 @@ def payment_process(request):
             'line_items': []  # list that will be populated with the order items
         }
 
+        # Add order items to the Stripe checkout session
+        for item in order.items.all():
+            session_data['line_items'].append(
+                {
+                    'price_data': {
+                        'unit_amount': int(item.price * Decimal('100')),  # unit is the smallest amount used for payment
+                        'currency': 'GBP',  # three letters in ISO format: Great Britain Pound
+                        'product_data': {
+                            'name': item.product.name,
+                        },
+                    },
+                    'quantity': item.quantity,
+                }
+            )
+
     else:
         return render(request, 'payment/process.html', locals())
 
+
+"""
+View for the payment success
+"""
+
+
+def payment_completed(request):
+    return render(request, 'payment/completed.html')
+
+
+"""
+View for the canceled payment
+"""
+
+
+def payment_canceled(request):
+    return render(request, 'payment/canceled.html')
