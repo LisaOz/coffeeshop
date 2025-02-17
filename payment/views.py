@@ -19,11 +19,14 @@ Payment_process view
 
 
 def payment_process(request):
-    order_id = request.session.get(
-        'order_id')  # retrieve current Order object ID with order_id session key, stored before with order_create view
-    order = get_object_or_404(Order,
-                              id=order_id)  # Order object for the given ID is retrieved. Exception if no order found
+    # retrieve current Order object ID with order_id session key, stored before with order_create view
+    order_id = request.session.get('order_id')
+    if not order_id:
+        print("Debug: no order_id in session") # debug log
+        return redirect('payment:canceled')  # Redirect to a page indicating something went wrong or no order exists
 
+    order = get_object_or_404(Order, id=order_id)  # Order obj for the given ID retrieved. Exception if no order found
+    print(f"Debug: Found order {order.id}")  # Debug log
     if request.method == 'POST':
         success_url = request.build_absolute_uri(
             reverse('payment:completed')
@@ -42,7 +45,7 @@ def payment_process(request):
             'line_items': []  # list that will be populated with the order items
         }
 
-        # Add order items to the Stripe checkout session
+        # Add order items to the checkout session before  creating the Stripe session
         for item in order.items.all():
             session_data['line_items'].append(
                 {
@@ -56,9 +59,19 @@ def payment_process(request):
                     'quantity': item.quantity,
                 }
             )
+        # Create the Stripe checkout session
+        try:
+            checkout_session = stripe.checkout.Session.create(**session_data)
 
-    else:
-        return render(request, 'payment/process.html', locals())
+            # Redirect to Stripe checkout session
+            return redirect(checkout_session.url)  # Redirect to the Stripe checkout page
+
+        except stripe.error.StripeError as e:
+            print(f"Stripe Error: {e}")  # Debug log
+            # Handle Stripe API errors (e.g., invalid request, etc.)
+            return render(request, 'payment/cancelled.html', {'error': str(e)})
+
+    return render(request, 'payment/process.html', locals())
 
 
 """
