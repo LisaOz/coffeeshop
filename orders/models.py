@@ -9,6 +9,7 @@ Contains fields to store customer information and a Boolean field 'paid', set to
 
 # Customer details
 class Order(models.Model):
+    # Fields for the database
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
@@ -18,7 +19,7 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
-
+    stripe_id = models.CharField(max_length=250, blank=True)
 
     # indexing
     class Meta:
