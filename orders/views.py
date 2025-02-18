@@ -1,5 +1,6 @@
+from django.contrib.admin.views.decorators import staff_member_required
 from cart.cart import Cart
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from .forms import OrderCreateForm
 from .models import OrderItem
 from .tasks import order_created
@@ -49,4 +50,13 @@ def order_create(request):
         request,
         'orders/order/create.html',
         {'cart': cart, 'form': form}
+    )
+
+
+# Use the decorator to check that both the is_active and is_staff fields of the user requesting the page is set to True
+@staff_member_required
+def admin_order_detail(request, order_id):
+    order = get_object_or_404(Order, id=order_id)  # get the Order object with the given ID
+    return render(
+        request, 'admin/orders/order/detail.html', {'order': order}  # render the template to display the order
     )

@@ -32,26 +32,6 @@ class OrderItemInline(admin.TabularInline):
     raw_id_fields = ["product"]
 
 
-@admin.register(Order)
-class OrderAdmin(admin.ModelAdmin):
-    list_display = [
-        "id",
-        "first_name",
-        "last_name",
-        "email",
-        "address",
-        "postal_code",
-        "city",
-        "paid",
-        order_payment,
-        "created",
-        "updated"
-    ]
-
-    list_filter = ["paid", "created", "updated"]
-    inlines = [OrderItemInline]
-
-
 """
 Method to export the data into the CSV file
 """
@@ -88,3 +68,27 @@ def export_to_csv(modeladmin, request, queryset):
 
 # Display name for the action in the action's drop=down element of the admin site
 export_to_csv.short_description = 'Export to CSV'
+
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = [
+        "id",
+        "first_name",
+        "last_name",
+        "email",
+        "address",
+        "postal_code",
+        "city",
+        "paid",
+        order_payment,
+        "created",
+        "updated"
+    ]
+
+    list_filter = ["paid", "created", "updated"]
+    inlines = [OrderItemInline]
+    actions = [export_to_csv]
+
+
