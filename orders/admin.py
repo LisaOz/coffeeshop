@@ -9,34 +9,20 @@ from django.http import HttpResponse
 
 # Register your models here.
 
+import csv
+import datetime
 
-# Method to add a link to each Order object on the list page of the admin site.
-# It takes an Order object as an argument and returns an HTML link with the payment URL in Stripe
+from django.contrib import admin
+from django.http import HttpResponse
+from django.urls import reverse
+from django.utils.safestring import mark_safe
+from .models import Order, OrderItem
 
-def order_payment(obj):
-    url = obj.get_stripe_url()
-    if obj.stripe_id:
-        html = f'<a href="{url}" target="_blank">{obj.stripe_id}</a>'
-        return mark_safe(html)  # here use 'mark-safe avoid auto-escape. Don't use on the inputs coming from the users!!
-    return ""
-
-
-order_payment.short_description = "Stripe payment"
-
-"""
-OrderInLine class is created to include the OrderItem model on the same edit page with its model
-"""
-
-
-class OrderItemInline(admin.TabularInline):
-    model = OrderItem
-    raw_id_fields = ["product"]
 
 
 """
 Method to export the data into the CSV file
 """
-
 
 def export_to_csv(modeladmin, request, queryset):
     opts = modeladmin.model._meta
@@ -65,10 +51,42 @@ def export_to_csv(modeladmin, request, queryset):
             data_row.append(value)
         writer.writerow(data_row)
     return response
-
-
 # Display name for the action in the action's drop=down element of the admin site
 export_to_csv.short_description = 'Export to CSV'
+
+
+
+"""
+OrderInLine class is created to include the OrderItem model on the same edit page with its model
+"""
+
+
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
+    raw_id_fields = ['product']
+
+
+"""
+Method to add a link to each Order object on the list page of the admin site.
+It takes an Order object as an argument and returns an HTML link with the payment URL in Stripe
+"""
+
+
+def order_payment(obj):
+    url = obj.get_stripe_url()
+    if obj.stripe_id:
+        html = f'<a href="{url}" target="_blank">{obj.stripe_id}</a>'
+        return mark_safe(html)  # here use 'mark-safe avoid auto-escape. Don't use on the inputs coming from the users!!
+    return ''
+
+
+order_payment.short_description = 'Stripe payment'
+
+
+def order_detail(obj):
+    url = reverse('orders:admin_order_detail', args=[obj.id])
+    return mark_safe(f'<a href="{url}">View</a>')
+
 
 
 """
@@ -77,30 +95,23 @@ to avoid auto-escaping of HTML by Django, use mark_safe function
 """
 
 
-def order_detail(obj):
-    url = reverse('orders:admin_order_detail', args=[obj.id])
-    return mark_safe(f'<a href="{url}">View</a>')
-
-
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = [
-        "id",
-        "first_name",
-        "last_name",
-        "email",
-        "address",
-        "postal_code",
-        "city",
-        "paid",
+        'id',
+        'first_name',
+        'last_name',
+        'email',
+        'address',
+        'postal_code',
+        'city',
+        'paid',
         order_payment,
-        "created",
-        "updated",
+        'created',
+        'updated',
         order_detail,
-    ]
 
-    list_filter = ["paid", "created", "updated"]
+    ]
+    list_filter = ['paid', 'created', 'updated']
     inlines = [OrderItemInline]
     actions = [export_to_csv]
-
-
