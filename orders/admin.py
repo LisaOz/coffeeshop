@@ -6,7 +6,6 @@ import csv
 import datetime
 from django.http import HttpResponse
 
-
 # Register your models here.
 
 import csv
@@ -18,11 +17,10 @@ from django.urls import reverse
 from django.utils.safestring import mark_safe
 from .models import Order, OrderItem
 
-
-
 """
 Method to export the data into the CSV file
 """
+
 
 def export_to_csv(modeladmin, request, queryset):
     opts = modeladmin.model._meta
@@ -51,10 +49,10 @@ def export_to_csv(modeladmin, request, queryset):
             data_row.append(value)
         writer.writerow(data_row)
     return response
+
+
 # Display name for the action in the action's drop=down element of the admin site
 export_to_csv.short_description = 'Export to CSV'
-
-
 
 """
 OrderInLine class is created to include the OrderItem model on the same edit page with its model
@@ -88,6 +86,12 @@ def order_detail(obj):
     return mark_safe(f'<a href="{url}">View</a>')
 
 
+def order_pdf(obj):
+    url = reverse('orders:admin_order_pdf', args=[obj.id])
+    return mark_safe(f' <a href="{url}">PDF</a>')
+
+
+order_pdf.short_description = "Your receipt"
 
 """
 This is a method that takes an Order object as an argument and returns an HTTP link from the admin order_detail URL.
@@ -110,6 +114,7 @@ class OrderAdmin(admin.ModelAdmin):
         'created',
         'updated',
         order_detail,
+        order_pdf,
 
     ]
     list_filter = ['paid', 'created', 'updated']
