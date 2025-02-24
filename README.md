@@ -145,28 +145,26 @@ The Django admin interface provides the following features for administrators:
    To run the development server locally:
 
 1. **Start the Django server**:
-   ```bash
-   python manage.py runserver
-
+      ```bash
+      python manage.py runserver
+2. Access the website at http://127.0.0.1:8000/. Access the administration site at http://127.0.0.1:8000/admin/ with the superuser credentials.
    
-   Access the website at http://127.0.0.1:8000/
-   Access the administration site at http://127.0.0.1:8000/admin/ with the superuser credentials.
 
-2. **Running Celery**
+3. **Running Celery**
    To run Celery with RabbitMQ as the message broker:
 
    Start RabbitMQ or make sure RabbitMQ is running. You can start RabbitMQ in the Dockers container or from the separate terminal with the following command (depending on the OS):
 
-   ```bash
-   sudo rabbitmq-server start
+      ```bash
+      sudo rabbitmq-server start
 
    Open http://127.0.0.1:15672 to acces RabbitMq messagment UI and see the queued messages.
    Run Celery worker: enter the folder where manage.py is located, activate the virtual environment .\venv\Scripts\Activate and run Celery:
 
-   ```bash
-   celery -A coffeeshop worker --loglevel=info --pool=solo 
+      ```bash
+      celery -A coffeeshop worker --loglevel=info --pool=solo 
 
-3. **Monitoring Celery with Flower**
+5. **Monitoring Celery with Flower**
    
    Flower is another tool, besides of RabbitMQ, to monitor the asynchronous tasks executed with Celery. Run it from the separate terminal after activating the virtual environment:
    ``` bash
