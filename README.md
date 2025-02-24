@@ -152,11 +152,11 @@ The Django admin interface provides the following features for administrators:
 
 3. **Running Celery**
    To run Celery with RabbitMQ as the message broker:
-
    Start RabbitMQ or make sure RabbitMQ is running. You can start RabbitMQ in the Dockers container or from the separate terminal with the following command (depending on the OS):
 
       ```bash
       sudo rabbitmq-server start
+
 
    Open http://127.0.0.1:15672 to acces RabbitMq messagment UI and see the queued messages.
    Run Celery worker: enter the folder where manage.py is located, activate the virtual environment .\venv\Scripts\Activate and run Celery:
@@ -164,11 +164,11 @@ The Django admin interface provides the following features for administrators:
       ```bash
       celery -A coffeeshop worker --loglevel=info --pool=solo 
 
-5. **Monitoring Celery with Flower**
+4. **Monitoring Celery with Flower**
    
    Flower is another tool, besides of RabbitMQ, to monitor the asynchronous tasks executed with Celery. Run it from the separate terminal after activating the virtual environment:
-   ``` bash
-   celery -A coffeeshop flower
+      ``` bash
+      celery -A coffeeshop flower
    
    To monitor Celery with Flower, access it on the page: http://localhost:5555:
 
