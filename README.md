@@ -141,8 +141,8 @@ The Django admin interface provides the following features for administrators:
 
 1. **Start the Django server**:
    ```bash
-   python manage.py runserver
-   <br>
+   python manage.py runserver```
+   
    Access the website at http://127.0.0.1:8000/
    Access the administration site at http://127.0.0.1:8000/admin/ with the superuser credentials.
 
@@ -152,23 +152,23 @@ The Django admin interface provides the following features for administrators:
    Start RabbitMQ or make sure RabbitMQ is running. You can start RabbitMQ in the Dockers container or from the separate terminal with the following command (depending on the OS):
 
    ```bash
-   sudo rabbitmq-server start
+   sudo rabbitmq-server start```
 
-      Open http://127.0.0.1:15672 to acces RabbitMq messagment UI and see the queued messages
+   Open http://127.0.0.1:15672 to acces RabbitMq messagment UI and see the queued messages
 
    Run Celery worker:
 
    Enter the folder where manage.py is located, activate the virtual environment .\venv\Scripts\Activate and run Celery:
 
    ```bash
-   celery -A coffeeshop worker --loglevel=info --pool=solo 
+   celery -A coffeeshop worker --loglevel=info --pool=solo``` 
 
 3. **Monitoring Celery with Flower**
    Flower is another tool, besides of RabbitMQ, to monitor the asynchronous tasks executed with Celery. Run it from the separate terminal after activating the virtual environment:
    ``` bash
-   celery -A coffeeshop flower
+   celery -A coffeeshop flower```
 
-      To monitor Celery with Flower, access it on the page: http://localhost:5555:
+   To monitor Celery with Flower, access it on the page: http://localhost:5555:
 
 
 ## Stripe Integration
@@ -184,8 +184,7 @@ The Django admin interface provides the following features for administrators:
    Billing API – For handling subscriptions and invoicing.
    Webhook API – For receiving real-time notifications about payment events.
    To integrate the payment gateway into the site, following steps have to be taken:
-   1. Setting a Stripe account. Follow this link to set the account:
-https://dashboard.stripe.com/register
+   1. Setting a Stripe account. Follow this link to set the account: https://dashboard.stripe.com/register
 
    2. Setting the Stripe API keys in the .env file.
    3. Frontend code can be used to handle Stripe’s JavaScript library for payment processing.
@@ -201,19 +200,16 @@ https://dashboard.stripe.com/register
    1. Configure your webhook endpoint in the Stripe Dashboard under **Developers > Webhooks**.  
    2. Set the webhook URL to:  
       https://your-ngrok-url.ngrok.io/stripe/webhook/ (in development).
-
-
    3. Ensure that the webhook secret key is set in the environment variables (e.g., using `python-decouple`).  
    4. Stripe will send event notifications to the provided endpoint.
 
 ## Testing
-To run tests for the project:
 
-```bash
-python manage.py test
-
+To run tests for the project: 
+```python manage.py test```
 
 ## Acknowledgements
+   
 I would like to express my gratitude to **Antonio Mele** for his guidance and insights provided in the book "Django 5 by example", which was a helpful tool in the    development of this coffeeshop website.
 
 
