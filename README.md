@@ -27,9 +27,6 @@ This project demonstrates essential web application features, including user and
 
 ## Project Setup
 
-To set up the project locally, follow these steps:
-
-### Prerequisites
 Ensure you have the following necessary packages installed:
 - Python 3.x
 - Django
@@ -42,6 +39,7 @@ You can install the required dependencies from the requirements.txt file.
 
 
 ### Steps to Set Up
+To set up the project locally, follow these steps:
 
 1. **Clone the repository:**
 
@@ -56,7 +54,7 @@ python3 -m venv venv
 source venv/bin/activate  # For Linux/macOS
 venv\Scripts\activate  # For Windows
 
-3. **Install the required dependencies if they are not yet installed**
+3. **Install the required dependencies if they are not yet installed:**
 
 ```bash
 pip install -r requirements.txt
