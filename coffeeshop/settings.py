@@ -139,7 +139,7 @@ MEDIA_ROOT = BASE_DIR / 'media' # local path were uploaded media files are locat
 # Create the KEY to store the cart in the user sessions
 CART_SESSION_ID = 'cart'
 
-# Email backend
+# Email backend. It is set to send the emails to the console.
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # access Stripe keys from .env
