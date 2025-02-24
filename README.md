@@ -160,7 +160,7 @@ The Django admin interface provides the following features for administrators:
 
    Open http://127.0.0.1:15672 to acces RabbitMq messagment UI and see the queued messages.
    Run Celery worker: enter the folder where manage.py is located, activate the virtual environment .\venv\Scripts\Activate and run Celery:
-
+      
       ```bash
       celery -A coffeeshop worker --loglevel=info --pool=solo 
 
@@ -170,7 +170,7 @@ The Django admin interface provides the following features for administrators:
       ``` bash
       celery -A coffeeshop flower
    
-   To monitor Celery with Flower, access it on the page: http://localhost:5555:
+To monitor Celery with Flower, access it on the page: http://localhost:5555:
 
 
 ## Stripe Integration
