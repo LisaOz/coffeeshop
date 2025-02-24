@@ -149,8 +149,8 @@ The Django admin interface provides the following features for administrators:
    python manage.py runserver
 
    
-   Access the website** at http://127.0.0.1:8000/
-   Access the administration site** at http://127.0.0.1:8000/admin/ with the superuser credentials.
+   Access the website at http://127.0.0.1:8000/
+   Access the administration site at http://127.0.0.1:8000/admin/ with the superuser credentials.
 
 2. **Running Celery**
    To run Celery with RabbitMQ as the message broker:
