@@ -92,7 +92,9 @@ To set up the project locally, follow these steps:
    - **WeasyPrint** - For generating PDF receipts.
 
 ## Application Structure
+
    ### File and Folders:
+   
    - **coffeeshop/** - Root folder containing project settings, configurations, and global dependencies.
    - **cart/** - Application that handles the shopping cart functionality, including adding, updating, and removing items.
    - **orders/** - Application that manages order processing, including order creation, status tracking, and history.
@@ -100,6 +102,7 @@ To set up the project locally, follow these steps:
    - **shop/** - Application that manages product listings, categories, and contains templates for displaying the list of products and products details.
 
    ### Files Contained in the Application Directories:
+   
    - **models.py** - Defines the database models for products, orders, and cart items.
    - **views.py** - Handles the logic website pages, such as displaying products, cart interactions, and checkout.
    - **tasks.py** - Contains Celery tasks for background processing, including sending confirmation emails and handling delayed transactions.
@@ -116,6 +119,7 @@ The user interface provides the following functionalities:
 - **Order Confirmation**: After payment, users receive a PDF receipt via email.
 
 ## Admin Interface
+
 The Django admin interface provides the following features for administrators:
 - **Admin Dashboard**: An easy to use admin interface provided by Django for managing orders and products.
 - **Manage Orders**: Admins can view, edit, and delete orders.
@@ -130,6 +134,7 @@ The Django admin interface provides the following features for administrators:
 
 
 ## Third-Party Integrations
+
 - **Stripe**: Stripe API is used for processing payments securely. 
 - **Celery**: Used for handling background tasks like sending emails and generating PDF receipts.
 - **RabbitMQ**: Celery uses RabbitMQ as the message broker for task management.
@@ -154,14 +159,14 @@ The Django admin interface provides the following features for administrators:
    ```bash
    sudo rabbitmq-server start
 
-- Open http://127.0.0.1:15672 to acces RabbitMq messagment UI and see the queued messages
-- Run Celery worker:
-- Enter the folder where manage.py is located, activate the virtual environment .\venv\Scripts\Activate and run Celery:
+- Open http://127.0.0.1:15672 to acces RabbitMq messagment UI and see the queued messages.
+- Run Celery worker: enter the folder where manage.py is located, activate the virtual environment .\venv\Scripts\Activate and run Celery:
 
    ```bash
    celery -A coffeeshop worker --loglevel=info --pool=solo 
 
 3. **Monitoring Celery with Flower**
+   
    Flower is another tool, besides of RabbitMQ, to monitor the asynchronous tasks executed with Celery. Run it from the separate terminal after activating the virtual environment:
    ``` bash
    celery -A coffeeshop flower
@@ -169,6 +174,7 @@ To monitor Celery with Flower, access it on the page: http://localhost:5555:
 
 
 ## Stripe Integration
+
    This project uses [Stripe](https://stripe.com/) to handle secure transactions and payment confirmations.
    Stripe provides an API (Application Programming Interface) that allows developers to integrate payment processing into their applications.
    It offers a set of RESTful APIs that handle transactions, refunds, subscriptions, webhooks, and more.
@@ -180,20 +186,22 @@ To monitor Celery with Flower, access it on the page: http://localhost:5555:
    Connect API – For managing multi-vendor platforms (like marketplaces).
    Billing API – For handling subscriptions and invoicing.
    Webhook API – For receiving real-time notifications about payment events.
+   
    To integrate the payment gateway into the site, following steps have to be taken:
    1. Setting a Stripe account. Follow this link to set the account: https://dashboard.stripe.com/register
-
    2. Setting the Stripe API keys in the .env file.
    3. Frontend code can be used to handle Stripe’s JavaScript library for payment processing.
 
 
-   ### Features:  
+   ### Features:
+   
    - Customers can securely pay for their orders using Stripe.  
    - Order details are stored, and a receipt is generated upon successful payment.  
    - Webhooks are implemented to listen for Stripe events, ensuring that order statuses are updated accordingly.  
    - The webhook handler processes payment events, such as successful charges, and updates the database automatically.  
 
-## Webhooks Configuration:  
+## Webhooks Configuration: 
+
    1. Configure your webhook endpoint in the Stripe Dashboard under **Developers > Webhooks**.  
    2. Set the webhook URL to:  
       https://your-ngrok-url.ngrok.io/stripe/webhook/ (in development).
