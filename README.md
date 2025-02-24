@@ -19,7 +19,9 @@
 ## Introduction
 
 Welcome to the **Coffee Shop Website**! 
-This project is a fully functional web application built to provide a seamless and user-friendly experience for both customers and administrators. 
+<br>
+<br>
+This project is a fully functional web application built to provide a seamless and user-friendly experience for the customers and administrators. 
 While it is ready to be deployed, it is still in the development phase. 
 The application allows users to browse a menu, place orders, and make payments with integrated features like Stripe for payment processing and Celery with RabbitMQ for handling asynchronous tasks such as sending payment notifications and emails with receipts.
 
@@ -83,13 +85,13 @@ To set up the project locally, follow these steps:
 
    This project uses the following dependencies:
 
-   ***Django*** - A high-level Python web framework used for building web applications.
-   ***Celery*** - Asynchronous task queue/job queue used for handling background tasks (such as sending emails, generating PDFs).
-   ***RabbitMQ*** - Message broker used as a message transport for Celery.
-   ***Stripe*** - Payment gateway integration for handling secure payments.
-   ***WeasyPrint*** - For generating PDF receipts.
+   - **Django** - A high-level Python web framework used for building web applications.
+   - **Celery** - Asynchronous task queue/job queue used for handling background tasks (such as sending emails, generating PDFs).
+   - **RabbitMQ** - Message broker used as a message transport for Celery.
+   - **Stripe** - Payment gateway integration for handling secure payments.
+   - **WeasyPrint** - For generating PDF receipts.
 
-## Applcation Structure
+## Application Structure
    ### File and Folders:
    - **coffeeshop/** - Root folder containing project settings, configurations, and global dependencies.
    - **cart/** - Application that handles the shopping cart functionality, including adding, updating, and removing items.
@@ -108,10 +110,10 @@ To set up the project locally, follow these steps:
 ## User Interface
 The user interface provides the following functionalities:
 
-**Home Page**: Displays the coffee shop's menu with the  option to select items.
-**Order Page**: Allows users to select products, provide details, and submit an order.
-**Stripe Integration**: Users can securely pay for their orders via Stripe.
-**Order Confirmation**: After payment, users receive a PDF receipt via email.
+- **Home Page**: Displays the coffee shop's menu with the  option to select items.
+- **Order Page**: Allows users to select products, provide details, and submit an order.
+- **Stripe Integration**: Users can securely pay for their orders via Stripe.
+- **Order Confirmation**: After payment, users receive a PDF receipt via email.
 
 ## Admin Interface
 The Django admin interface provides the following features for administrators:
@@ -139,7 +141,7 @@ The Django admin interface provides the following features for administrators:
 
 1. **Start the Django server**:
    ```bash
-   python manage.py runserver
+   python manage.py runserver ```
    Access the website at http://127.0.0.1:8000/
    access the administration site at http://127.0.0.1:8000/admin/ with the superuser credentials.
 
