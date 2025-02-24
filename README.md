@@ -141,9 +141,10 @@ The Django admin interface provides the following features for administrators:
 
 1. **Start the Django server**:
    ```bash
-   python manage.py runserver ```
-   Access the website at http://127.0.0.1:8000/
-   access the administration site at http://127.0.0.1:8000/admin/ with the superuser credentials.
+   python manage.py runserver
+   
+      Access the website at http://127.0.0.1:8000/
+      Access the administration site at http://127.0.0.1:8000/admin/ with the superuser credentials.
 
 2. **Running Celery**
    To run Celery with RabbitMQ as the message broker:
@@ -152,7 +153,8 @@ The Django admin interface provides the following features for administrators:
 
    ```bash
    sudo rabbitmq-server start
-   Open http://127.0.0.1:15672 to acces RabbitMq messagment UI and see the queued messages
+
+      Open http://127.0.0.1:15672 to acces RabbitMq messagment UI and see the queued messages
 
    Run Celery worker:
 
@@ -165,7 +167,8 @@ The Django admin interface provides the following features for administrators:
    Flower is another tool, besides of RabbitMQ, to monitor the asynchronous tasks executed with Celery. Run it from the separate terminal after activating the virtual environment:
    ``` bash
    celery -A coffeeshop flower
-   To monitor Celery with Flower, access it on the page: http://localhost:5555:
+
+      To monitor Celery with Flower, access it on the page: http://localhost:5555:
 
 
 ## Stripe Integration
