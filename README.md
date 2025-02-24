@@ -158,26 +158,26 @@ The Django admin interface provides the following features for administrators:
       sudo rabbitmq-server start
 
 
-   Open http://127.0.0.1:15672 to acces RabbitMq messagment UI and see the queued messages.
-   Run Celery worker: enter the folder where manage.py is located, activate the virtual environment .\venv\Scripts\Activate and run Celery:
+Open http://127.0.0.1:15672 to acces RabbitMq messagment UI and see the queued messages.
+Run Celery worker: enter the folder where manage.py is located, activate the virtual environment .\venv\Scripts\Activate and run Celery:
       
-      ```bash
-      celery -A coffeeshop worker --loglevel=info --pool=solo 
+   ```bash
+   celery -A coffeeshop worker --loglevel=info --pool=solo 
 
 4. **Monitoring Celery with Flower**
    
-   Flower is another tool, besides of RabbitMQ, to monitor the asynchronous tasks executed with Celery. Run it from the separate terminal after activating the virtual environment:
-      ``` bash
-      celery -A coffeeshop flower
+Flower is another tool, besides of RabbitMQ, to monitor the asynchronous tasks executed with Celery. Run it from the separate terminal after activating the virtual environment:
+   ``` bash
+   celery -A coffeeshop flower
    
 To monitor Celery with Flower, access it on the page: http://localhost:5555:
 
 
 ## Stripe Integration
 
-   This project uses [Stripe](https://stripe.com/) to handle secure transactions and payment confirmations.
-   Stripe provides an API (Application Programming Interface) that allows developers to integrate payment processing into their applications.
-   It offers a set of RESTful APIs that handle transactions, refunds, subscriptions, webhooks, and more.
+This project uses [Stripe](https://stripe.com/) to handle secure transactions and payment confirmations.
+Stripe provides an API (Application Programming Interface) that allows developers to integrate payment processing into their applications.
+It offers a set of RESTful APIs that handle transactions, refunds, subscriptions, webhooks, and more.
 
    ### Stripe's API includes:
 
