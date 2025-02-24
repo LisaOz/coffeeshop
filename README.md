@@ -48,12 +48,13 @@ To set up the project locally, follow these steps:
    ```bash
    git clone https://github.com/LisaOz/coffeeshop.git
    cd coffeeshop
-
+   ```
 2. **Create a virtual environment and activate it**:
    
 
    ```bash
    python3 -m venv venv
+   ```
    source venv/bin/activate  # For Linux/macOS
    venv\Scripts\activate  # For Windows
 
@@ -61,7 +62,7 @@ To set up the project locally, follow these steps:
 
    ```bash
    pip install -r requirements.txt
-
+   ```
 4. **Set up the environment variables**
    
    Create a .env file in the root directory and include the sensitive settings such as:
@@ -75,12 +76,12 @@ To set up the project locally, follow these steps:
 
    ```bash
    python manage.py migrate
-
+   ```
 6. **Create a superuser for the admin panel**:
 
    ```bash
    python manage.py createsuperuser
-
+   ```
 ## Installed Dependencies
 
    This project uses the following dependencies:
@@ -147,6 +148,7 @@ The Django admin interface provides the following features for administrators:
 1. **Start the Django server**:
       ```bash
       python manage.py runserver
+      ```
 2. Access the website at http://127.0.0.1:8000/. Access the administration site at http://127.0.0.1:8000/admin/ with the superuser credentials.
    
 
@@ -154,22 +156,22 @@ The Django admin interface provides the following features for administrators:
    To run Celery with RabbitMQ as the message broker:
    Start RabbitMQ or make sure RabbitMQ is running. You can start RabbitMQ in the Dockers container or from the separate terminal with the following command (depending on the OS):
 
-      ```bash
-      sudo rabbitmq-server start
-
+   ```bash
+   sudo rabbitmq-server start
+   ```
 
 Open http://127.0.0.1:15672 to acces RabbitMq messagment UI and see the queued messages.
 Run Celery worker: enter the folder where manage.py is located, activate the virtual environment .\venv\Scripts\Activate and run Celery:
       
    ```bash
    celery -A coffeeshop worker --loglevel=info --pool=solo 
-
+   ```
 4. **Monitoring Celery with Flower**
    
 Flower is another tool, besides of RabbitMQ, to monitor the asynchronous tasks executed with Celery. Run it from the separate terminal after activating the virtual environment:
    ``` bash
    celery -A coffeeshop flower
-   
+   ```
 To monitor Celery with Flower, access it on the page: http://localhost:5555:
 
 
