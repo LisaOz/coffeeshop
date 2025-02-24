@@ -60,7 +60,7 @@ To set up the project locally, follow these steps:
 3. **Install the required dependencies if they are not yet installed:**
 
    ```bash
-   pip install -r requirements.txt
+   `pip install -r requirements.txt`
 
 4. **Set up the environment variables**
    
@@ -74,12 +74,12 @@ To set up the project locally, follow these steps:
 5. **Run the database migrations**:
 
    ```bash
-   python manage.py migrate
+   `python manage.py migrate`
 
 6. **Create a superuser for the admin panel**:
 
    ```bash
-   python manage.py createsuperuser
+   `python manage.py createsuperuser`
 
 ## Installed Dependencies
 
@@ -141,8 +141,7 @@ The Django admin interface provides the following features for administrators:
 
 1. **Start the Django server**:
    ```bash
-   python manage.py runserver```
-   
+   `python manage.py runserver` 
    Access the website at http://127.0.0.1:8000/
    Access the administration site at http://127.0.0.1:8000/admin/ with the superuser credentials.
 
@@ -152,7 +151,7 @@ The Django admin interface provides the following features for administrators:
    Start RabbitMQ or make sure RabbitMQ is running. You can start RabbitMQ in the Dockers container or from the separate terminal with the following command (depending on the OS):
 
    ```bash
-   sudo rabbitmq-server start```
+   `sudo rabbitmq-server start`
 
    Open http://127.0.0.1:15672 to acces RabbitMq messagment UI and see the queued messages
 
@@ -161,12 +160,12 @@ The Django admin interface provides the following features for administrators:
    Enter the folder where manage.py is located, activate the virtual environment .\venv\Scripts\Activate and run Celery:
 
    ```bash
-   celery -A coffeeshop worker --loglevel=info --pool=solo``` 
+   `celery -A coffeeshop worker --loglevel=info --pool=solo` 
 
 3. **Monitoring Celery with Flower**
    Flower is another tool, besides of RabbitMQ, to monitor the asynchronous tasks executed with Celery. Run it from the separate terminal after activating the virtual environment:
    ``` bash
-   celery -A coffeeshop flower```
+   `celery -A coffeeshop flower`
 
    To monitor Celery with Flower, access it on the page: http://localhost:5555:
 
@@ -206,7 +205,7 @@ The Django admin interface provides the following features for administrators:
 ## Testing
 
 To run tests for the project: 
-```python manage.py test```
+`python manage.py test`
 
 ## Acknowledgements
    
