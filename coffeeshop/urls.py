@@ -21,6 +21,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls), # url for admin site
+    path('account/', include('account.urls')),  # url for login into account
     path('cart/', include('cart.urls', namespace='cart')),  # this url is more restrictive, include it before shop.url
     path('orders/', include('orders.urls', namespace='orders')),
     path('payment/', include('payment.urls', namespace='payment')),  # url pattern for the payment application
