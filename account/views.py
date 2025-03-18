@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -7,6 +8,10 @@ from django.contrib.auth import login
 # Create your views here.
 
 
+"""
+View for user login
+
+"""
 def user_login(request):
     # if the user submits the form with the POST request, the form is instantiated with the submitted data
     # with the LoginForm(request.POST), then validated with form.is_valid(). If invalid, the error message is displayed
@@ -37,6 +42,11 @@ def user_login(request):
 
 
 
+"""
+View for user registration
+"""
+
+
 def user_register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -47,3 +57,22 @@ def user_register(request):
     else:
         form = UserCreationForm()
     return render(request, 'account/register.html', {'form': form})
+
+
+
+"""
+View for dashboard
+"""
+
+
+# the decorator is used to check if the current user is authenticated.
+# If the user is not authenticated, it redirects the user to the login URL.
+# Login view redirects users tp the URL they were trying to access by using
+# hidden <input> HTML element 'next' in Login template
+@login_required
+def dashboard(request):
+    return render(
+        'request',
+        'account/dashboard.html',
+        {'section': 'dashboard'}
+    )
