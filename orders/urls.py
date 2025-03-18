@@ -17,5 +17,10 @@ urlpatterns = [
     path('admin/order/<int:order_id>/pdf/',
          views.admin_order_pdf,
          name='admin_order_pdf'
-         ),
+    ),
+    path('barista/', views.barista_dashboard, name='barista_dashboard'),
+    path('order/preparing/<int:order_id>/', views.mark_order_preparing, name='mark_order_preparing'),
+    path('order/collected/<int:order_id>/', views.mark_order_collected, name='mark_order_collected'),
+
 ]
+

@@ -1,0 +1,12 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+  <h1>Mark Order as Preparing</h1>
+  <p>Are you sure you want to mark Order ID {{ order.id }} as "In Preparation"?</p>
+  
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit">Yes, mark as Preparing</button>
+  </form>
+  <a href="{% url 'orders:barista_dashboard' %}">Cancel</a>
+{% endblock %}

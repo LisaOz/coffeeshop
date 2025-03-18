@@ -1,11 +1,13 @@
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
+from django.contrib.staticfiles import finders
 from cart.cart import Cart
 from django.shortcuts import get_object_or_404, redirect, render
 from .forms import OrderCreateForm
 from .models import Order, OrderItem
+from shop.models import StaffRole
 from .tasks import order_created
 import weasyprint
-from django.contrib.staticfiles import finders
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 
@@ -94,3 +96,44 @@ def admin_order_detail(request, order_id):
     return render(
         request, 'admin/orders/order/detail.html', {'order': order}  # render the template to display the order
     )
+
+def barista_required(view_func):
+    """Custom decorator to restrict access to baristas only."""
+    def wrapper(request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('login')  # Redirect to login page if not logged in
+        if not StaffRole.objects.filter(user=request.user, name='Barista').exists():
+            return redirect('shop:product_list')  # Redirect unauthorized users
+        return view_func(request, *args, **kwargs)
+    return wrapper
+
+
+"""Dashboard for baristas to manage orders in preparation"""
+@barista_required
+def barista_dashboard(request):
+    # Filter orders that are either in "Placed" or "In Preparation" status
+    orders = Order.objects.filter(status__in=["Placed", "In Preparation", "Collected"])
+    return render(request, 'orders/order/barista_dashboard.html', {'orders': orders})
+
+
+"""Allows baristas to mark an order as collected"""
+@barista_required
+def mark_order_collected(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    if request.method == 'POST':
+        order.status = "Collected"
+        order.save()
+        return redirect('barista_dashboard')  # Redirect back to the dashboard
+    return render(request, 'orders/order/mark_order_collected.html', {'order': order})
+
+
+"""Allow Barista to mark an order as 'Preparing'"""
+@barista_required
+def mark_order_preparing(request, order_id):
+
+    order = get_object_or_404(Order, id=order_id)
+    if request.method == 'POST':
+        order.status = "In Preparation"  # Update the order's status to 'In Preparation'
+        order.save()
+        return redirect('orders:barista_dashboard')  # Redirect back to the dashboard
+    return render(request, 'orders/order/mark_order_preparing.html', {'order': order})

@@ -1,8 +1,24 @@
-from django.shortcuts import get_object_or_404, render
-from .models import Category, Product
+from django.shortcuts import get_object_or_404, render, redirect
+
+from orders.models import Order
+from .models import Category, Product, StaffRole
 from cart.forms import FormToAddProduct
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 # Create your views here
+
+
+# Custom decorator to restrict access to baristas only
+def barista_required(view_func):
+    """Custom decorator to restrict access to baristas only."""
+    def wrapper(request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('login')  # Redirect to login page if not logged in
+        if not StaffRole.objects.filter(user=request.user, name='Barista').exists():
+            return redirect('shop:product_list')  # Redirect unauthorized users
+        return view_func(request, *args, **kwargs)
+    return wrapper
 
 # Code to display the list of all available products
 def product_list(request, category_slug=None):
@@ -36,3 +52,30 @@ def product_detail(request, id, slug):
         'shop/product/detail.html',
         {'product': product, 'cart_product_form': cart_product_form}
     )
+
+
+# -------------------------------
+# Views for Staff Roles
+# -------------------------------
+
+
+"""View to list all staff roles"""
+def staff_roles(request):
+    roles = StaffRole.objects.all()
+    return render(request, 'shop/staff/list.html', {'roles': roles})
+
+
+
+"""View to show details of a specific staff role"""
+def staff_role_detail(request, role_slug):
+    role = get_object_or_404(StaffRole, slug=role_slug)
+    return render(request, 'shop/staff/detail.html', {'role': role})
+
+
+# View for Barista Dashboard
+
+@barista_required  # Use the custom decorator
+def barista_dashboard(request):
+    # Orders that need attention (Placed or In Preparation)
+    orders = Order.objects.filter(status__in=["Placed", "In Preparation"])
+    return render(request, 'orders/order/ready_to_collect.html', {'orders': orders})

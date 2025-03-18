@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Orders Ready for Collection{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Orders Ready for Collection</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Created</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.customer.username }}</td>
+                    <td>{{ order.created|date:"Y-m-d H:i" }}</td>
+                    <td>{{ order.status }}</td>
+                    <td>
+                        {% if order.status != "Collected" %}
+                        <form method="post" action="{% url 'mark_order_collected' order.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">Mark as Collected</button>
+                        </form>
+                        {% else %}
+                        <span class="text-muted">Collected</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">No orders available.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

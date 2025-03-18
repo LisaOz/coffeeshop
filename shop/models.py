@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -76,5 +77,24 @@ class Product(models.Model):
             models.Index(fields=['-created']),
         ]
 
+"""
+Models for staff roles (Admin, Barista, Manager, Finance Manager)
+"""
+class StaffRole(models.Model):
+
+    user = models.ForeignKey(User, related_name='roles', on_delete=models.CASCADE)  # Link to User model
+    name = models.CharField(max_length=100, unique=True)  # Role name (Barista, Finance Manager, Manager)
+    slug = models.SlugField(max_length=100, unique=True)  # Unique identifier for the URL
+
+    def get_absolute_url(self):
+        return reverse('shop:staff_role_detail', args=[self.slug])
+
+    class Meta:
+        ordering = ['name']
+        indexes = [models.Index(fields=['name'])]
+        verbose_name = 'staff role'
+        verbose_name_plural = 'staff roles'
+
     def __str__(self):
         return self.name
+
