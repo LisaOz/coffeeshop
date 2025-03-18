@@ -1,8 +1,9 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import LoginForm
-
+from django.contrib.auth import login
 # Create your views here.
 
 
@@ -33,3 +34,16 @@ def user_login(request):
     else:
         form = LoginForm()
     return render(request, 'account/login.html', {'form': form})
+
+
+
+def user_register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # Log the user in after successful registration
+            return redirect('shop:product_list')  # Redirect to shop or another page
+    else:
+        form = UserCreationForm()
+    return render(request, 'account/register.html', {'form': form})

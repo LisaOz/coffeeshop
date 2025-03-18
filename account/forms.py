@@ -3,5 +3,5 @@ from django import forms
 
 
 class LoginForm(forms.Form):
-    username = forms.Charfield()
-    password = forms.Charfield(widget=forms.PasswordInput)  # Password widget is used to render the password HTML elem.
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)  # Password widget is used to render the password HTML elem.
