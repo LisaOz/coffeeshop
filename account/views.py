@@ -3,8 +3,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+
+from orders.models import Order
 from .forms import LoginForm
-from django.contrib.auth import login
+
+
+
 # Create your views here.
 
 
@@ -50,13 +54,16 @@ View for user registration
 def user_register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
+        if form.is_valid():  # if form is valid
+            user = form.save() # save the new user
             login(request, user)  # Log the user in after successful registration
-            return redirect('shop:product_list')  # Redirect to shop or another page
+
+            # Check if there's a 'next' URL to redirect the user to
+            next_url = request.POST.get('next', 'shop:product_list')  # Default to 'shop:product_list' if no 'next'
+            return redirect(next_url)  # Redirect to the next page
     else:
         form = UserCreationForm()
-    return render(request, 'account/register.html', {'form': form})
+    return render(request, 'registration/register.html', {'form': form})
 
 
 
@@ -69,10 +76,9 @@ View for dashboard
 # If the user is not authenticated, it redirects the user to the login URL.
 # Login view redirects users tp the URL they were trying to access by using
 # hidden <input> HTML element 'next' in Login template
+
+
 @login_required
 def dashboard(request):
-    return render(
-        'request',
-        'account/dashboard.html',
-        {'section': 'dashboard'}
-    )
+    user_orders = Order.objects.filter(user=request.user)  # Get orders of the logged-in user
+    return render(request, 'account/dashboard.html', {'user_orders': user_orders})

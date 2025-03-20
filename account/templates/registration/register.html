@@ -1,0 +1,27 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Create an account{% endblock %}
+
+{% block content %}
+    <h1>Create an account</h1>
+    <p>To sign up, use the following form:</p>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        {% if form.errors %}
+            <div style="color: red;">
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <li><strong>{{ field|title }}:</strong> {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <p><input type="submit" value="Create account"></p>
+    </form>
+{% endblock %}

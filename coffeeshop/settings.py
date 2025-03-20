@@ -78,9 +78,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'coffeeshop.wsgi.application'
 
 # URLs for login, logout and dashboard to redirect user after successful login
-LOGIN_REDIRECT_URL = 'dashboard'
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'account:dashboard'  # Redirects users to dashboard after login
+LOGIN_URL = 'account:login'  # Redirects unauthenticated users to login page
+LOGOUT_REDIRECT_URL = 'account:login'  # Redirects users to login page after logout
+
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
