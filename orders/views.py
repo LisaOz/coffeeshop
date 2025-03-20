@@ -137,3 +137,14 @@ def mark_order_preparing(request, order_id):
         order.save()
         return redirect('orders:barista_dashboard')  # Redirect back to the dashboard
     return render(request, 'orders/order/mark_order_preparing.html', {'order': order})
+
+
+# Payment successful and order completion page
+@login_required
+def payment_completed(request):
+    # Get the user's orders after payment completion
+    user_orders = Order.objects.filter(user=request.user)
+
+    # After successful payment
+    return render(request, 'payment/completed.html', {'user_orders': user_orders})
+

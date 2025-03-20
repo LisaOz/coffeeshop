@@ -78,7 +78,10 @@ View for dashboard
 # hidden <input> HTML element 'next' in Login template
 
 
+
 @login_required
 def dashboard(request):
+    # fetch orders from the Order model where user matches the currently logged-in user
     user_orders = Order.objects.filter(user=request.user)  # Get orders of the logged-in user
-    return render(request, 'account/dashboard.html', {'user_orders': user_orders})
+
+    return render(request, 'dashboard.html', {'user_orders': user_orders})  # Pass user_orders variable to the template

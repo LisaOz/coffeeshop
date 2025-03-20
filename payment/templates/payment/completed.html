@@ -1,8 +1,24 @@
 {% extends "shop/base.html" %}
 
-{% block title %}Payment successful{% endblock %}
-
 {% block content %}
-    <h1>Your payment is successful</h1>
-    <p>Your payment has been processed successfully</p>
+  <h2>Your payment has been completed successfully!</h2>
+  <p>Thank you for your order!</p>
+
+  <h3>Your Orders:</h3>
+  {% if user_orders %}
+    <ul>
+      {% for order in user_orders %}
+        <li>Order #{{ order.id }} - Status: {{ order.status }} - Total: ${{ order.get_total_cost }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>You don’t have any orders yet.</p>
+  {% endif %}
+
+  <h3>What would you like to do next?</h3>
+  <ul>
+    <li><a href="{% url 'shop:product_list' %}">Continue Shopping</a></li>
+    <li><a href="{% url 'account:dashboard' %}">Return to Dashboard</a></li>
+    <li><a href="{% url 'account:logout' %}">Exit</a></li>
+  </ul>
 {% endblock %}

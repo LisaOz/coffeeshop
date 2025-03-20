@@ -18,5 +18,6 @@ urlpatterns = [
 
     # URL pattern for the Stripe webhook
     path('webhook/', webhooks.stripe_webhook, name='stripe-webhook'),
+    path('completed/', views.payment_completed, name='payment_completed'),
 
 ]
