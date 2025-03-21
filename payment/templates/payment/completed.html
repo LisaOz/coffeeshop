@@ -4,7 +4,7 @@
   <h2>Your payment has been completed successfully!</h2>
   <p>Thank you for your order!</p>
 
-  <h3>Your Orders:</h3>
+  <h3>Your Cart:</h3>
   {% if user_orders %}
     <ul>
       {% for order in user_orders %}
@@ -12,7 +12,7 @@
       {% endfor %}
     </ul>
   {% else %}
-    <p>You don’t have any orders yet.</p>
+    <p>Your cart is empty.</p>
   {% endif %}
 
   <h3>What would you like to do next?</h3>

@@ -1,9 +1,10 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
+from django.core.checks import messages
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-
+from django.contrib import messages
 from orders.models import Order
 from .forms import LoginForm
 
@@ -78,10 +79,28 @@ View for dashboard
 # hidden <input> HTML element 'next' in Login template
 
 
-
 @login_required
 def dashboard(request):
     # fetch orders from the Order model where user matches the currently logged-in user
     user_orders = Order.objects.filter(user=request.user)  # Get orders of the logged-in user
 
     return render(request, 'dashboard.html', {'user_orders': user_orders})  # Pass user_orders variable to the template
+
+
+
+# View to see account details and change the password
+@login_required
+def account_details(request):
+    if request.method == 'POST':
+        # Handle password change
+        password_form = PasswordChangeForm(user=request.user, data=request.POST)
+
+        if password_form.is_valid():
+            password_form.save()
+            messages.success(request, "Password changed successfully!")
+            return redirect('account:dashboard')  # Redirect to prevent re-submission
+    else:
+        password_form = PasswordChangeForm(user=request.user)
+
+    # Render the page with both the user info and the password form
+    return render(request, 'registration/account_details.html', {'user': request.user, 'password_form': password_form})

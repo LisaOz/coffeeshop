@@ -3,19 +3,37 @@
 {% block title %}My Account{% endblock %}
 
 {% block content %}
+
     <h1>Welcome, {{ user.username }}!</h1>
-    <p>My orders:</p>
+    <h2>Your Orders</h2>
 
-    {% if user_orders %}
-        <h2>Your Orders:</h2>
-        <ul>
-            {% for order in user_orders %}
-                <li>Order #{{ order.id }} - {{ order.status }} (Placed on {{ order.created_at }})</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>You have no orders yet.</p>
+        {% if user_orders %}
+            <div class="order-list">
+                {% for order in user_orders %}
+                    <div class="order-item">
+                        <div class="order-header">
+                            <strong>Order #{{ order.id }}</strong>
+                            <span class="order-status">{{ order.get_status_display }}</span>
+                        </div>
+                        <div class="order-details">
+                            <span class="order-total">Total: £{{ order.get_total_cost }}</span>
+                            <span class="order-date">Placed on {{ order.created|date:"F j, Y" }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+        <p>Your cart is empty.</p>
     {% endif %}
+    <div class="account-actions">
 
-    <p><a href="{% url 'shop:product_list' %}">Continue Shopping</a></p>
+        <!-- Return to Account page -->
+        <a href="{% url 'account:account_details' %}" class="btn">See Account Details</a>
+
+        <!-- Go to Shopping -->
+        <a href="{% url 'shop:product_list' %}" class="btn">Go to Shopping</a>
+
+        <!-- Exit (Logout) -->
+        <a href="{% url 'account:logout' %}" class="btn">Exit</a>
+    </div>
 {% endblock %}

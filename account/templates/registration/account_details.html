@@ -1,0 +1,17 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+  <h1>Account Details</h1>
+
+  <h2>Your Account</h2>
+  <p>Username: {{ user.username }}</p>
+  <p>Email: {{ user.email }}</p>
+
+  <h2>Change Password</h2>
+  <form method="POST">
+    {% csrf_token %}
+    {{ password_form.as_p }}
+    <button type="submit">Change Password</button>
+  </form>
+
+{% endblock %}

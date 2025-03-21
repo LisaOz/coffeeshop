@@ -1,33 +1,38 @@
 {% load static %}
 <! DOCTYPE html>
-<html>
-    <head>
-        <!-- Add Bootstrap CSS-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-        <meta charset="utf-8" />
-        <title>{% block title %}Coffee Shop{% endblock %}</title>
-        <link href="{% static 'css/base.css' %}" rel="stylesheet">
-    </head>
-    <body>
-        <div id="header">
-            <a href="/" class="logo">Coffee Shop</a>
+<html lang="en">
+<head>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="utf-8" />
+    <title>{% block title %}Coffee Shop{% endblock %}</title>
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div id="header">
+        <a href="/" class="logo">Coffee Shop</a>
 
-             <span class="user">
-                {% if request.user.is_authenticated %}
+        <span class="user">
+            {% if request.user.is_authenticated %}
                 Hello {{ request.user.first_name|default:request.user.username }},
-                <form action="{% url 'account:logout' %}" method="post">
-                    <button type="submit">Logout</button>
+                <form action="{% url 'account:logout' %}" method="post" style="display:inline;">
                     {% csrf_token %}
+                    <button type="submit" class="btn btn-link">Logout</button>
                 </form>
-            {% else %}
-                <a href="{% url 'account:login' %}">Log in</a>
-            {% endif %}
-            </span>
+                <ul>
 
-        </div>
-        <div id="subheader">
-            <div class="cart">
-                {% with total_items=cart|length %}
+                    <li><a href="{% url 'account:account_details' %}">View Account Details</a></li>
+                    <li><a href="{% url 'account:logout' %}">Exit</a></li>
+                </ul>
+            {% else %}
+                <a href="{% url 'account:login' %}" class="btn btn-primary">Log in</a>
+            {% endif %}
+        </span>
+    </div>
+
+    <div id="subheader">
+        <div class="cart">
+            {% with total_items=cart|length %}
                 {% if total_items > 0 %}
                     Your Cart:
                     <a href="{% url 'cart:cart_detail' %}">
@@ -35,13 +40,14 @@
                     </a>
                 {% elif not order %}
                     Your cart is empty
-                    {% endif %}
-                {% endwith %}
-            </div>
+                {% endif %}
+            {% endwith %}
         </div>
-        <div id="content">
-            {% block content %}
-            {% endblock %}
-        </div>
-    </body>
+    </div>
+
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
 </html>

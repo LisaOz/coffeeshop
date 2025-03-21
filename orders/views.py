@@ -52,8 +52,12 @@ def order_create(request):
     form = OrderCreateForm() # to ensure 'form' is always defined
     if request.method == 'POST': # Validates the data sent in the request
         form = OrderCreateForm(request.POST)
-        if form.is_valid():
-            order = form.save()
+        if form.is_valid():  # create an order and associate it with the logged-in user
+            order = form.save(commit=False)
+            order.user = request.user # Associate the order with the logged-in user
+            order.save()  # save the order into the database
+
+            # Create OrderItems for each item in the cart
             for item in cart:  # iterate over all items in the cart and create a new order in the database
                 OrderItem.objects.create(
                     order=order,
