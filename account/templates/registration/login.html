@@ -21,6 +21,12 @@
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ next|default:'/account/dashboard/' }}" />
             <p><input type="submit" value="Login"></p>
+
+             {% if not request.user.is_authenticated %}
+        <div class="btn-group">
+            <a href="{% url 'account:login' %}" class="btn btn-warning">Login</a>
+        </div>
+    {% endif %}
         </form>
 
     </div>

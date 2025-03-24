@@ -6,12 +6,15 @@ from . import views
 # Staff-related URLs
 app_name = 'shop'
 urlpatterns = [
+    path('', views.home, name='home'),
+
+
     path('staff/', views.staff_roles, name='staff_roles'),
     path('staff/<slug:role_slug>/', views.staff_role_detail, name='staff_role_detail'),
-    path('barista/', views.barista_dashboard, name='barista_dashboard'),
+    path('barista_dashboard/', views.barista_dashboard, name='barista_dashboard'),
 
     # Product-related URLs
-    path('', views.product_list, name='product_list'),
+    path('product/', views.product_list, name='product_list'),
     path(
         '<slug:category_slug>/',
         views.product_list,

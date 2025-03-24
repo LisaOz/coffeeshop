@@ -1,0 +1,23 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Welcome to the Coffee Shop{% endblock %}
+
+{% block content %}
+<div class="container text-center">
+    <h1>Welcome to the Coffee Shop!</h1>
+
+    <!-- Staff Login Button (Only Visible When Not Logged In) -->
+    {% if not request.user.is_authenticated %}
+        <div class="btn-group">
+            <a href="{% url 'account:staff_login' %}" class="btn btn-warning">Staff Login</a>
+        </div>
+    {% endif %}
+
+    <hr>
+
+    <!-- Go to Shop Button -->
+    <div class="btn-group">
+        <a href="{% url 'shop:list' %}" class="btn btn-success">Continue to the Shop</a>
+    </div>
+</div>
+{% endblock %}

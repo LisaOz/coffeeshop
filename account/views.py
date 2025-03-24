@@ -1,10 +1,12 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, AuthenticationForm
 from django.core.checks import messages
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
+
+from coffeeshop import settings
 from orders.models import Order
 from .forms import LoginForm
 
@@ -36,7 +38,8 @@ def user_login(request):
                 # if the used is active, it is logged into the site and set into the session with login() method
                 if user.is_active:
                     login(request, user)
-                    return HttpResponse('User authenticated successfully')  # returns the user object
+                    return redirect('account:dashboard')
+                    #return HttpResponse('User authenticated successfully')  # returns the user object
                 else:
                     return HttpResponse('Disabled account')
             else:
@@ -104,3 +107,46 @@ def account_details(request):
 
     # Render the page with both the user info and the password form
     return render(request, 'registration/account_details.html', {'user': request.user, 'password_form': password_form})
+
+
+
+"""
+View for staff login (role = 'Barista')
+"""
+
+
+def staff_login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            if user.groups.filter(name="Barista").exists():  # Check if user is a barista
+                login(request, user)
+                return redirect(settings.STAFF_LOGIN_REDIRECT_URL)  # Redirect to barista dashboard
+            else:
+                return redirect('shop:home')  # Redirect unauthorized users to home
+    else:
+        form = AuthenticationForm()
+    return render(request, 'staff_account/staff_login.html', {'form': form})
+
+
+"""
+View for staff logout
+"""
+
+def staff_logout(request):
+    logout(request)
+    return redirect(settings.STAFF_LOGOUT_REDIRECT_URL)  # Redirect to staff login after logout
+
+"""
+Barista dashboard_view
+"""
+@login_required
+def barista_dashboard(request):
+    if not request.user.groups.filter(name="Barista").exists():
+        messages.error(request, "You are not authorized to access this page.")
+        return redirect('shop:home')
+
+    orders = Order.objects.filter(status__in=["paid", "pending"]).order_by("created")
+
+    return render(request, 'staff_account/barista_dashboard.html', {'orders': orders})

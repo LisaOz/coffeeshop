@@ -1,3 +1,5 @@
+from functools import wraps
+
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.staticfiles import finders
@@ -101,46 +103,32 @@ def admin_order_detail(request, order_id):
         request, 'admin/orders/order/detail.html', {'order': order}  # render the template to display the order
     )
 
+
+
+""""
+view for barista
+"""
+
 def barista_required(view_func):
-    """Custom decorator to restrict access to baristas only."""
+    """Decorator to restrict access to baristas only."""
+    @wraps(view_func)
     def wrapper(request, *args, **kwargs):
         if not request.user.is_authenticated:
-            return redirect('login')  # Redirect to login page if not logged in
-        if not StaffRole.objects.filter(user=request.user, name='Barista').exists():
-            return redirect('shop:product_list')  # Redirect unauthorized users
+            return redirect('staff_account:staff_login')  # Redirect to staff login
+        if not request.user.groups.filter(name='Barista').exists():
+            return redirect('shop:home')  # Redirect unauthorized users to home
         return view_func(request, *args, **kwargs)
     return wrapper
 
 
-"""Dashboard for baristas to manage orders in preparation"""
+"""
+View to barista dashboard
+"""
 @barista_required
 def barista_dashboard(request):
-    # Filter orders that are either in "Placed" or "In Preparation" status
-    orders = Order.objects.filter(status__in=["Placed", "In Preparation", "Collected"])
-    return render(request, 'orders/order/barista_dashboard.html', {'orders': orders})
-
-
-"""Allows baristas to mark an order as collected"""
-@barista_required
-def mark_order_collected(request, order_id):
-    order = get_object_or_404(Order, id=order_id)
-    if request.method == 'POST':
-        order.status = "Collected"
-        order.save()
-        return redirect('barista_dashboard')  # Redirect back to the dashboard
-    return render(request, 'orders/order/mark_order_collected.html', {'order': order})
-
-
-"""Allow Barista to mark an order as 'Preparing'"""
-@barista_required
-def mark_order_preparing(request, order_id):
-
-    order = get_object_or_404(Order, id=order_id)
-    if request.method == 'POST':
-        order.status = "In Preparation"  # Update the order's status to 'In Preparation'
-        order.save()
-        return redirect('orders:barista_dashboard')  # Redirect back to the dashboard
-    return render(request, 'orders/order/mark_order_preparing.html', {'order': order})
+    """Dashboard for baristas to manage orders"""
+    orders = Order.objects.filter(status__in=["Paid", "Pending"]).order_by("created_at")
+    return render(request, 'staff_account/barista_dashboard.html', {'orders': orders})
 
 
 # Payment successful and order completion page
@@ -152,3 +140,39 @@ def payment_completed(request):
     # After successful payment
     return render(request, 'payment/completed.html', {'user_orders': user_orders})
 
+
+
+
+"""
+View for order status on the barista dashboard
+"""
+@login_required
+def update_order_status(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+
+    if request.method == "POST" and request.user.groups.filter(name="barista").exists():
+        new_status = request.POST.get("status")
+        order.status = new_status
+        order.save()
+        return redirect('account:staff_dashboard')
+
+    return HttpResponse("Unauthorized", status=403)
+
+
+@barista_required
+def mark_order_collected(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    if request.method == 'POST':
+        order.status = "Collected"
+        order.save()
+        return redirect('staff_account:barista_dashboard')  # Redirect to dashboard
+    return render(request, 'staff_account/mark_order_collected.html', {'order': order})
+
+@barista_required
+def mark_order_preparing(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    if request.method == 'POST':
+        order.status = "Preparing"  # Correct status name
+        order.save()
+        return redirect('staff_account:barista_dashboard')
+    return render(request, 'staff_account/mark_order_preparing.html', {'order': order})

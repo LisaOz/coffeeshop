@@ -7,7 +7,8 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 # Create your views here
-
+def home(request):
+    return render(request, 'shop/home.html')
 
 # Custom decorator to restrict access to baristas only
 def barista_required(view_func):
