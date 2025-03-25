@@ -1,13 +1,12 @@
 {% extends 'shop/base.html' %}
 
 {% block content %}
-  <h1>Mark Order as Collected</h1>
-  <p>Are you sure you want to mark Order ID {{ order.id }} as "Collected"?</p>
-
+  <h1>Mark Order as Preparing</h1>
+  <p>Mark Order ID {{ order.id }} as "In Preparation"</p>
+  
   <form method="POST">
     {% csrf_token %}
-    <button type="submit">Yes, mark as Collected</button>
+    <button type="submit">Mark as Preparing</button>
   </form>
-
   <a href="{% url 'account:barista_dashboard' %}" class="btn btn-danger">Cancel</a>
 {% endblock %}

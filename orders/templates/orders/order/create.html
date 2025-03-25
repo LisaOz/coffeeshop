@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="checkout-container">
-        <!-- Left: Order Form -->
+        <!-- on the left: Order Form -->
         <div class="order-form-container">
             <h1>Checkout</h1>
             <form method="post" class="order-form">
@@ -12,12 +12,22 @@
                 <div class="form-fields">
                     {{ form.as_p }}
                 </div>
+
+                <!-- Checkout as Guest Option -->
+                <div class="guest-checkout">
+                    <label>
+                        <input type="checkbox" name="guest_checkout" id="guest-checkout">
+                        Checkout as Guest
+                    </label>
+                </div>
+
+
                 <button type="submit" class="btn btn-primary">Place Order</button>
             </form>
 
         </div>
 
-        <!-- Right: Order Summary -->
+        <!-- On the right: Order Summary -->
         <div class="order-summary">
            <h3>Your Order</h3>
             <ul class="order-items">

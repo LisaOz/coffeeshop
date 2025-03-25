@@ -1,3 +1,4 @@
+from functools import wraps
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.staticfiles import finders
@@ -11,11 +12,11 @@ import weasyprint
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 
-
 """
 This is a view to generate a PDF invoice for an order
 Decorate is used to indicate tht only staff users can access this view.
 """
+
 
 @staff_member_required
 def admin_order_pdf(request, order_id):
@@ -42,20 +43,26 @@ def admin_order_pdf(request, order_id):
     return response
 
 
+
 """
 View for the 'order_create' 
 """
 
 
 def order_create(request):
+
     cart = Cart(request)  # get the current cart from the session cart
-    form = OrderCreateForm() # to ensure 'form' is always defined
-    if request.method == 'POST': # Validates the data sent in the request
+    form = OrderCreateForm()  # to ensure 'form' is always defined
+    if request.method == 'POST':  # Validates the data sent in the request
         form = OrderCreateForm(request.POST)
         if form.is_valid():  # create an order and associate it with the logged-in user
             order = form.save(commit=False)
-            order.user = request.user # Associate the order with the logged-in user
+            order.user = request.user  # Associate the order with the logged-in user
             order.save()  # save the order into the database
+            print(f"New order created with status: {order.status}")
+
+
+
 
             # Create OrderItems for each item in the cart
             for item in cart:  # iterate over all items in the cart and create a new order in the database
@@ -66,8 +73,7 @@ def order_create(request):
                     quantity=item['quantity']
                 )
 
-
-            cart.clear() # Clear the cart
+            cart.clear()  # Clear the cart
 
             # Launch asynchronous task to send the email message (to the console) about the placed order.
             # The delay() method of the task is called to execute it asynchronously. The task will be added
@@ -85,7 +91,6 @@ def order_create(request):
     else:
         form = OrderCreateForm()
 
-
     return render(
         request,
         'orders/order/create.html',
@@ -101,47 +106,50 @@ def admin_order_detail(request, order_id):
         request, 'admin/orders/order/detail.html', {'order': order}  # render the template to display the order
     )
 
+
+"""
+view for barista
+"""
+
+
 def barista_required(view_func):
-    """Custom decorator to restrict access to baristas only."""
+    @wraps(view_func)
     def wrapper(request, *args, **kwargs):
         if not request.user.is_authenticated:
-            return redirect('login')  # Redirect to login page if not logged in
-        if not StaffRole.objects.filter(user=request.user, name='Barista').exists():
-            return redirect('shop:product_list')  # Redirect unauthorized users
+            return redirect('staff_account:staff_login')  # Redirect to staff login
+        if not request.user.groups.filter(name='Barista').exists():
+            print(f"User: {request.user}, Groups: {list(request.user.groups.values_list('name', flat=True))}")
+            return redirect('shop:home')  # Redirect unauthorized users to home
+
         return view_func(request, *args, **kwargs)
+
     return wrapper
 
 
-"""Dashboard for baristas to manage orders in preparation"""
+"""
+View to barista dashboard
+"""
+
 @barista_required
 def barista_dashboard(request):
-    # Filter orders that are either in "Placed" or "In Preparation" status
-    orders = Order.objects.filter(status__in=["Placed", "In Preparation", "Collected"])
-    return render(request, 'orders/order/barista_dashboard.html', {'orders': orders})
 
+    orders = Order.objects.filter(status="Pending").order_by("created")
+    return render(request, 'staff_account/barista_dashboard.html', {'orders': orders})
 
-"""Allows baristas to mark an order as collected"""
-@barista_required
-def mark_order_collected(request, order_id):
-    order = get_object_or_404(Order, id=order_id)
-    if request.method == 'POST':
-        order.status = "Collected"
-        order.save()
-        return redirect('barista_dashboard')  # Redirect back to the dashboard
-    return render(request, 'orders/order/mark_order_collected.html', {'order': order})
+"""
+    # for debagging:
+    
+    @barista_required
+    def barista_dashboard(request):
+        orders = Order.objects.filter(status="Pending").order_by("created")
 
+        print(f"User: {request.user}")  # Print the logged-in user
+        print(f"Groups: {list(request.user.groups.values_list('name', flat=True))}")  # Print user groups
+        print(f"Orders Count: {orders.count()}")  # Print order count
+        print(f"Orders: {list(orders)}")  # Print order details
 
-"""Allow Barista to mark an order as 'Preparing'"""
-@barista_required
-def mark_order_preparing(request, order_id):
-
-    order = get_object_or_404(Order, id=order_id)
-    if request.method == 'POST':
-        order.status = "In Preparation"  # Update the order's status to 'In Preparation'
-        order.save()
-        return redirect('orders:barista_dashboard')  # Redirect back to the dashboard
-    return render(request, 'orders/order/mark_order_preparing.html', {'order': order})
-
+        return render(request, 'staff_account/barista_dashboard.html', {'orders': orders})
+"""
 
 # Payment successful and order completion page
 @login_required
@@ -152,3 +160,59 @@ def payment_completed(request):
     # After successful payment
     return render(request, 'payment/completed.html', {'user_orders': user_orders})
 
+
+"""
+View for order status on the barista dashboard
+"""
+
+
+@login_required
+def update_order_status(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    if request.user.groups.filter(name="barista").exists():
+
+        if request.method == "POST":
+            new_status = request.POST.get("status")
+
+            # Ensure new status is valid
+            valid_statuses = ["Pending", "Preparing", "Ready to Collect", "Collected"]
+            if new_status in valid_statuses:
+                order.status = new_status
+                order.save()
+                return redirect('account:barista_dashboard')
+            else:
+                return HttpResponse("Invalid status", status=400)
+    return HttpResponse("Unauthorized", status=403)
+
+
+
+
+@barista_required
+def mark_order_preparing(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    if request.method == 'POST':
+        order.status = "Preparing"
+        order.save()
+        return redirect('staff_account:barista_dashboard')
+    return render(request, 'staff_account/mark_order_preparing.html', {'order': order})
+
+
+@barista_required
+def mark_order_ready_co_collect(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    if request.method == 'POST':
+        order.status = "Ready co Collect"
+        order.save()
+        return redirect('staff_account:barista_dashboard')  # Redirect to dashboard
+    return render(request, 'staff_account/mark_order_ready_to_collect.html', {'order': order})
+
+
+
+@barista_required
+def mark_order_collected(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    if request.method == 'POST':
+        order.status = "Collected"
+        order.save()
+        return redirect('staff_account:barista_dashboard')  # Redirect to dashboard
+    return render(request, 'staff_account/mark_order_collected.html', {'order': order})

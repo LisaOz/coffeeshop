@@ -14,16 +14,12 @@
 
         <span class="user">
             {% if request.user.is_authenticated %}
-                Hello {{ request.user.first_name|default:request.user.username }},
+                 Hello {{ request.user.first_name|default:request.user.username }},
                 <form action="{% url 'account:logout' %}" method="post" style="display:inline;">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-link">Logout</button>
                 </form>
-                <ul>
 
-                    <li><a href="{% url 'account:account_details' %}">View Account Details</a></li>
-                    <li><a href="{% url 'account:logout' %}">Exit</a></li>
-                </ul>
             {% else %}
                 <a href="{% url 'account:login' %}" class="btn btn-primary">Log in</a>
             {% endif %}

@@ -13,9 +13,14 @@ urlpatterns = [
     path('account_details/', views.account_details, name='account_details'),
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+
+   # custom views:
+
     path('register/', views.user_register, name='register'),
-    #path('', views.dashboard, name='dashboard'),
+    path('barista_dashboard/', views.barista_dashboard, name='barista_dashboard'),
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('staff_login/', views.staff_login, name='staff_login'),
+    path('staff_logout/', views.staff_logout, name='staff_logout'),  # Staff logout URL
 
 
 ]

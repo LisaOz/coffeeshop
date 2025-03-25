@@ -7,7 +7,8 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 # Create your views here
-
+def home(request):
+    return render(request, 'shop/home.html')
 
 # Custom decorator to restrict access to baristas only
 def barista_required(view_func):
@@ -54,28 +55,3 @@ def product_detail(request, id, slug):
     )
 
 
-# -------------------------------
-# Views for Staff Roles
-# -------------------------------
-
-
-"""View to list all staff roles"""
-def staff_roles(request):
-    roles = StaffRole.objects.all()
-    return render(request, 'shop/staff/list.html', {'roles': roles})
-
-
-
-"""View to show details of a specific staff role"""
-def staff_role_detail(request, role_slug):
-    role = get_object_or_404(StaffRole, slug=role_slug)
-    return render(request, 'shop/staff/detail.html', {'role': role})
-
-
-# View for Barista Dashboard
-
-@barista_required  # Use the custom decorator
-def barista_dashboard(request):
-    # Orders that need attention (Placed or In Preparation)
-    orders = Order.objects.filter(status__in=["Placed", "In Preparation"])
-    return render(request, 'orders/order/ready_to_collect.html', {'orders': orders})

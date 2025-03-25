@@ -1,0 +1,16 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+  <h1>Order Status: {{ order.status }}</h1>
+
+  <p>Order ID: {{ order.id }} is currently in the "Pending" state.</p>
+
+  {% if order.status == "Pending" %}
+    <form method="POST" action="{% url 'orders:mark_order_preparing' order.id %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary">Mark as Preparing</button>
+    </form>
+  {% endif %}
+
+  <a href="{% url 'orders:barista_dashboard' %}" class="btn btn-danger">Cancel</a>
+{% endblock %}

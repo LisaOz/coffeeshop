@@ -24,6 +24,8 @@ class Order(models.Model):
     paid = models.BooleanField(default=False)
     stripe_id = models.CharField(max_length=250, blank=True)
 
+
+
     # Status field for order progress
     PENDING = 'Pending'
     PREPARING = 'Preparing'

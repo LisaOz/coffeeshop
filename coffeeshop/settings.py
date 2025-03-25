@@ -80,10 +80,13 @@ WSGI_APPLICATION = 'coffeeshop.wsgi.application'
 # URLs for login, logout and dashboard to redirect user after successful login
 
 LOGIN_REDIRECT_URL = '/account/dashboard/' # Redirects to account details
-LOGIN_URL = 'account:login'  # Redirects unauthenticated users to login page
-LOGOUT_REDIRECT_URL = 'account:login'  # Redirects users to login page after logout
+LOGIN_URL = 'shop:home'  # Redirects unauthenticated users to login page
+LOGOUT_REDIRECT_URL = 'shop:home'  # Redirects users to login page after logout
 
-
+# Settings for staff login
+STAFF_LOGIN_REDIRECT_URL = '/account/barista_dashboard/'  # Redirects to barista dashboard after staff login
+STAFF_LOGIN_URL = 'account:staff_login'  # Redirects unauthenticated staff to staff login page
+STAFF_LOGOUT_REDIRECT_URL = 'account:staff_login'  # Redirects staff to staff login page after logout
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
