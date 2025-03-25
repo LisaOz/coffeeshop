@@ -1,4 +1,8 @@
 from functools import wraps
+<<<<<<< HEAD
+=======
+
+>>>>>>> a4334d432523e81d4e867f41ae574e4a96ec2fa9
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.staticfiles import finders
@@ -107,20 +111,34 @@ def admin_order_detail(request, order_id):
     )
 
 
+<<<<<<< HEAD
 """
 view for barista
 """
 
 
 def barista_required(view_func):
+=======
+
+""""
+view for barista
+"""
+
+def barista_required(view_func):
+    """Decorator to restrict access to baristas only."""
+>>>>>>> a4334d432523e81d4e867f41ae574e4a96ec2fa9
     @wraps(view_func)
     def wrapper(request, *args, **kwargs):
         if not request.user.is_authenticated:
             return redirect('staff_account:staff_login')  # Redirect to staff login
         if not request.user.groups.filter(name='Barista').exists():
+<<<<<<< HEAD
             print(f"User: {request.user}, Groups: {list(request.user.groups.values_list('name', flat=True))}")
             return redirect('shop:home')  # Redirect unauthorized users to home
 
+=======
+            return redirect('shop:home')  # Redirect unauthorized users to home
+>>>>>>> a4334d432523e81d4e867f41ae574e4a96ec2fa9
         return view_func(request, *args, **kwargs)
 
     return wrapper
@@ -129,6 +147,7 @@ def barista_required(view_func):
 """
 View to barista dashboard
 """
+<<<<<<< HEAD
 
 @barista_required
 def barista_dashboard(request):
@@ -150,6 +169,14 @@ def barista_dashboard(request):
 
         return render(request, 'staff_account/barista_dashboard.html', {'orders': orders})
 """
+=======
+@barista_required
+def barista_dashboard(request):
+    """Dashboard for baristas to manage orders"""
+    orders = Order.objects.filter(status__in=["Paid", "Pending"]).order_by("created_at")
+    return render(request, 'staff_account/barista_dashboard.html', {'orders': orders})
+
+>>>>>>> a4334d432523e81d4e867f41ae574e4a96ec2fa9
 
 # Payment successful and order completion page
 @login_required
@@ -161,6 +188,7 @@ def payment_completed(request):
     return render(request, 'payment/completed.html', {'user_orders': user_orders})
 
 
+<<<<<<< HEAD
 """
 View for order status on the barista dashboard
 """
@@ -208,6 +236,26 @@ def mark_order_ready_co_collect(request, order_id):
 
 
 
+=======
+
+
+"""
+View for order status on the barista dashboard
+"""
+@login_required
+def update_order_status(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+
+    if request.method == "POST" and request.user.groups.filter(name="barista").exists():
+        new_status = request.POST.get("status")
+        order.status = new_status
+        order.save()
+        return redirect('account:staff_dashboard')
+
+    return HttpResponse("Unauthorized", status=403)
+
+
+>>>>>>> a4334d432523e81d4e867f41ae574e4a96ec2fa9
 @barista_required
 def mark_order_collected(request, order_id):
     order = get_object_or_404(Order, id=order_id)
@@ -215,4 +263,17 @@ def mark_order_collected(request, order_id):
         order.status = "Collected"
         order.save()
         return redirect('staff_account:barista_dashboard')  # Redirect to dashboard
+<<<<<<< HEAD
     return render(request, 'staff_account/mark_order_collected.html', {'order': order})
+=======
+    return render(request, 'staff_account/mark_order_collected.html', {'order': order})
+
+@barista_required
+def mark_order_preparing(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    if request.method == 'POST':
+        order.status = "Preparing"  # Correct status name
+        order.save()
+        return redirect('staff_account:barista_dashboard')
+    return render(request, 'staff_account/mark_order_preparing.html', {'order': order})
+>>>>>>> a4334d432523e81d4e867f41ae574e4a96ec2fa9

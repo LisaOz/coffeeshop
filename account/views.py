@@ -149,6 +149,9 @@ def barista_dashboard(request):
 
     orders = Order.objects.filter(status__in=["paid", "pending"]).order_by("created")
 
+<<<<<<< HEAD
     print(orders)  # Debugging to check if orders are being fetched correctly
 
+=======
+>>>>>>> a4334d432523e81d4e867f41ae574e4a96ec2fa9
     return render(request, 'staff_account/barista_dashboard.html', {'orders': orders})

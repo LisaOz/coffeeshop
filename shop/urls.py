@@ -9,7 +9,13 @@ urlpatterns = [
     path('', views.home, name='home'),
 
 
+<<<<<<< HEAD
 
+=======
+    path('staff/', views.staff_roles, name='staff_roles'),
+    path('staff/<slug:role_slug>/', views.staff_role_detail, name='staff_role_detail'),
+    path('barista_dashboard/', views.barista_dashboard, name='barista_dashboard'),
+>>>>>>> a4334d432523e81d4e867f41ae574e4a96ec2fa9
 
     # Product-related URLs
     path('product/', views.product_list, name='product_list'),
