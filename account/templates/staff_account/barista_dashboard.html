@@ -1,9 +1,7 @@
 {% extends "shop/base.html" %}
-
 {% block title %}Barista Dashboard - Coffee Shop{% endblock %}
-
 {% block content %}
-<<<<<<< HEAD
+
 <h2>Welcome, {{ request.user.username }} (Barista)</h2>
 
 {% if messages %}
@@ -13,7 +11,6 @@
         </div>
     {% endfor %}
 {% endif %}
-
 
 <table border="1">
     <thead>
@@ -57,46 +54,5 @@
     </tbody>
 </table>
 <p>Total Pending Orders: {{ orders|length }}</p>
-=======
-    <h2>Welcome, {{ request.user.username }} (Barista)</h2>
 
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}success{% endif %}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
-
-    <table border="1">
-        <tr>
-            <th>Order ID</th>
-            <th>Customer</th>
-            <th>Status</th>
-            <th>Change Status</th>
-        </tr>
-        {% for order in orders %}
-        <tr>
-            <td>{{ order.id }}</td>
-            <td>{{ order.customer.username }}</td>
-            <td>{{ order.status }}</td>
-            <td>
-                <form method="post" action="{% url 'account:update_order_status' order.id %}">
-                    {% csrf_token %}
-                    <select name="status">
-                        <option value="preparing" {% if order.status == "preparing" %}selected{% endif %}>Preparing</option>
-                        <option value="ready_to_collect" {% if order.status == "ready_to_collect" %}selected{% endif %}>Ready to Collect</option>
-                        <option value="collected" {% if order.status == "collected" %}selected{% endif %}>Collected</option>
-                    </select>
-                    <button type="submit">Update</button>
-                </form>
-            </td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="4">No orders available.</td>
-        </tr>
-        {% endfor %}
-    </table>
->>>>>>> a4334d432523e81d4e867f41ae574e4a96ec2fa9
 {% endblock %}

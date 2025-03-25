@@ -1,6 +1,4 @@
 from django.shortcuts import get_object_or_404, render, redirect
-
-from orders.models import Order
 from .models import Category, Product, StaffRole
 from cart.forms import FormToAddProduct
 from django.shortcuts import render
