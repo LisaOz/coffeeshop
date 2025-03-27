@@ -22,23 +22,35 @@
         <th>Customer Name</th>
         <th>Items</th>
         <th>Status</th>
+        <th>Update Status</th>
       </tr>
     </thead>
     <tbody>
       {% for order in orders %}
-        <tr class="{% if order.status == 'Pending' %}pending{% elif order.status == 'Ready to Collect' %}ready-to-collect{% elif order.status == 'Collected' %}collected{% endif %}">
+        <tr class="{% if order.status == 'pending' %}pending{% elif order.status == 'ready to collect' %}ready-to-collect{% elif order.status == 'collected' %}collected{% endif %}">
           <td>{{ order.id }}</td>
-          <td>{{ order.first_name }} {{ order.last_name }}</td>
+          <td>{{ order.first_name }}</td>
           <td>
             {% for item in order.items.all %}
               {{ item.product.name }}{% if not forloop.last %}, {% endif %}
             {% endfor %}
           </td>
           <td>{{ order.status }}</td>
+          <td>
+            <form method="POST" action="{% url 'orders:update_order_status' order.id %}">
+              {% csrf_token %}
+              <select name="status" class="status-dropdown" data-order-id="{{ order.id }}">
+                <option value="pending" {% if order.status == 'pending' %}selected{% endif %}>Pending</option>
+                <option value="preparing" {% if order.status == 'preparing' %}selected{% endif %}>Preparing</option>
+                <option value="ready to collect" {% if order.status == 'ready to collect' %}selected{% endif %}>Ready to Collect</option>
+                <option value="collected" {% if order.status == 'collected' %}selected{% endif %}>Collected</option>
+              </select>
+            </form>
+          </td>
         </tr>
       {% empty %}
         <tr>
-          <td colspan="4">No orders available.</td>
+          <td colspan="5">No orders available.</td>
         </tr>
       {% endfor %}
     </tbody>
@@ -54,6 +66,9 @@
   .pending {
     background-color: #f8d7da; /* Light red for pending */
   }
+  .preparing {
+    background-color: #cce5ff; /* Light blue for preparing */
+  }
   .ready-to-collect {
     background-color: #fff3cd; /* Light yellow for ready to collect */
   }
@@ -64,4 +79,16 @@
     background-color: #f9f9f9; /* Light gray for odd rows */
   }
 </style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll(".status-dropdown").forEach(function(selectElement) {
+      selectElement.addEventListener("change", function() {
+        this.form.submit();
+      });
+    });
+  });
+</script>
 {% endblock %}

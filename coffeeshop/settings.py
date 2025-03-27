@@ -89,7 +89,7 @@ LOGIN_URL = 'shop:home'  # Redirects unauthenticated users to login page
 LOGOUT_REDIRECT_URL = 'shop:home'  # Redirects users to login page after logout
 
 # Settings for staff login
-STAFF_LOGIN_REDIRECT_URL = '/account/barista_dashboard/'  # Redirects to barista dashboard after staff login
+STAFF_LOGIN_REDIRECT_URL = '/orders/barista_dashboard/'  # Redirects to barista dashboard after staff login
 STAFF_LOGIN_URL = 'account:staff_login'  # Redirects unauthenticated staff to staff login page
 STAFF_LOGOUT_REDIRECT_URL = 'account:staff_login'  # Redirects staff to staff login page after logout
 # Database

@@ -101,23 +101,6 @@ def admin_order_detail(request, order_id):
     )
 
 
-""""
-view for barista
-"""
-
-def barista_required(view_func):
-    """Decorator to restrict access to baristas only."""
-
-    @wraps(view_func)
-    def wrapper(request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return redirect('staff_account:staff_login')  # Redirect to staff login
-        if not request.user.groups.filter(name='Barista').exists():
-            return redirect('shop:home')  # Redirect unauthorized users to home
-
-        return view_func(request, *args, **kwargs)
-
-    return wrapper
 
 
 
@@ -138,9 +121,22 @@ View for barista dashboard
 """
 
 
+def barista_required(view_func):
+    """Decorator to restrict access to baristas only."""
+
+    @wraps(view_func)
+    def wrapper(request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('staff_account:staff_login')  # Redirect to staff login
+        if not request.user.groups.filter(name='Barista').exists():
+            return redirect('shop:home')  # Redirect unauthorized users to home
+
+        return view_func(request, *args, **kwargs)
+
+    return wrapper
+
 
 def barista_dashboard(request):
-    print("Executing barista_dashboard from orders/views.py")  # Debugging
     orders = Order.objects.all()  # Fetch all orders
     print(orders)  # Debugging: Check if orders exist
     return render(request, 'barista_dashboard.html', {'orders': orders})
@@ -166,10 +162,10 @@ def update_order_status(request, order_id):
             if new_status in valid_statuses:
                 order.status = new_status
                 order.save()
-                return redirect('account:barista_dashboard')
+                return redirect('barista_dashboard')
             else:
                 return HttpResponse("Invalid status", status=400)
-    return HttpResponse("Unauthorized", status=403)
+    return HttpResponse("Unauthorised", status=403)
 
 
 
@@ -180,8 +176,8 @@ def mark_order_preparing(request, order_id):
     if request.method == 'POST':
         order.status = "Preparing"
         order.save()
-        return redirect('staff_account:barista_dashboard')
-    return render(request, 'staff_account/mark_order_preparing.html', {'order': order})
+        return redirect('orders:barista_dashboard')
+    return render(request, 'orders/mark_order_preparing.html', {'order': order})
 
 
 @barista_required
@@ -190,8 +186,8 @@ def mark_order_ready_co_collect(request, order_id):
     if request.method == 'POST':
         order.status = "Ready co Collect"
         order.save()
-        return redirect('staff_account:barista_dashboard')  # Redirect to dashboard
-    return render(request, 'staff_account/mark_order_ready_to_collect.html', {'order': order})
+        return redirect('orders:barista_dashboard')  # Redirect to dashboard
+    return render(request, 'orders/mark_order_ready_to_collect.html', {'order': order})
 
 
 
@@ -201,9 +197,9 @@ def mark_order_collected(request, order_id):
     if request.method == 'POST':
         order.status = "Collected"
         order.save()
-        return redirect('staff_account:barista_dashboard')  # Redirect to dashboard
+        return redirect('orders:barista_dashboard')  # Redirect to dashboard
 
-    return render(request, 'staff_account/mark_order_collected.html', {'order': order})
+    return render(request, 'orders/mark_order_collected.html', {'order': order})
 
 
 

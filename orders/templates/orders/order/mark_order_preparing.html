@@ -8,5 +8,5 @@
     {% csrf_token %}
     <button type="submit">Mark as Preparing</button>
   </form>
-  <a href="{% url 'account:barista_dashboard' %}" class="btn btn-danger">Cancel</a>
+  <a href="{% url 'orders:barista_dashboard' %}" class="btn btn-danger">Cancel</a>
 {% endblock %}

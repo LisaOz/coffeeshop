@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-
+from .views import barista_dashboard, update_order_status
 
 """
 URL pattern for the order_create view
@@ -8,7 +8,7 @@ URL pattern for the order_create view
 app_name = 'orders'
 
 urlpatterns = [
- # Order creation and payment
+    # Order creation and payment
     path('create/', views.order_create, name='order_create'),
     path('created/', views.order_created, name='order_created'),
     path('order/<int:order_id>/detail/', views.admin_order_detail, name='admin_order_detail'),
@@ -20,14 +20,14 @@ urlpatterns = [
     path('admin/order/<int:order_id>/pdf/',
          views.admin_order_pdf,
          name='admin_order_pdf'
-    ),
+         ),
 
     path('payment/completed/', views.payment_completed, name='payment_completed'),  # Path to the payment completion
 
-
-
     # Order status updates for Baristas
-    path('barista-dashboard/', views.barista_dashboard, name='barista_dashboard'),
+
+    path('barista_dashboard/', barista_dashboard, name='barista_dashboard'),
+    path('update_order_status/<int:order_id>/', update_order_status, name='update_order_status'),
 
     # URL for marking an order as 'Preparing'
     path('mark-order-preparing/<int:order_id>/', views.mark_order_preparing, name='mark_order_preparing'),
