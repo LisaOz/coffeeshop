@@ -138,7 +138,6 @@ def barista_required(view_func):
 
 def barista_dashboard(request):
     orders = Order.objects.all()  # Fetch all orders
-    print(orders)  # Debugging: Check if orders exist
     return render(request, 'barista_dashboard.html', {'orders': orders})
 
 

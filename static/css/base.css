@@ -413,3 +413,17 @@ footer {
     color: #888;
     font-style: italic;
 }
+
+
+.pending {
+    background-color: #ffa500; /* Orange */
+  }
+  .preparing {
+    background-color: #ffff00; /* Yellow */
+  }
+  .ready_to_collect {
+    background-color: #00ff00; /* Bright green */
+  }
+  .collected {
+    background-color: #90ee90; /* Muted green */
+  }

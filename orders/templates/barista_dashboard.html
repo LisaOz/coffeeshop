@@ -1,4 +1,5 @@
 {% extends "admin/base_site.html" %}
+{% load static %}
 
 {% block title %}Barista Dashboard - Coffee Shop{% endblock %}
 
@@ -21,13 +22,13 @@
         <th>Order ID</th>
         <th>Customer Name</th>
         <th>Items</th>
-        <th>Status</th>
+
         <th>Update Status</th>
       </tr>
     </thead>
     <tbody>
       {% for order in orders %}
-        <tr class="{% if order.status == 'pending' %}pending{% elif order.status == 'ready to collect' %}ready-to-collect{% elif order.status == 'collected' %}collected{% endif %}">
+        <tr class="{% if order.status|lower == 'pending' %}pending{% elif order.status|lower == 'preparing' %}preparing{% elif order.status|lower == 'ready to collect' %}ready-to-collect{% elif order.status|lower == 'collected' %}collected{% endif %}">
           <td>{{ order.id }}</td>
           <td>{{ order.first_name }}</td>
           <td>
@@ -35,7 +36,7 @@
               {{ item.product.name }}{% if not forloop.last %}, {% endif %}
             {% endfor %}
           </td>
-          <td>{{ order.status }}</td>
+
           <td>
             <form method="POST" action="{% url 'orders:update_order_status' order.id %}">
               {% csrf_token %}
@@ -56,29 +57,11 @@
     </tbody>
   </table>
 </div>
-
 <p>Total Pending Orders: {{ orders|length }}</p>
-
 {% endblock %}
 
 {% block styles %}
-<style>
-  .pending {
-    background-color: #f8d7da; /* Light red for pending */
-  }
-  .preparing {
-    background-color: #cce5ff; /* Light blue for preparing */
-  }
-  .ready-to-collect {
-    background-color: #fff3cd; /* Light yellow for ready to collect */
-  }
-  .collected {
-    background-color: #d4edda; /* Light green for collected */
-  }
-  tr:nth-child(odd) {
-    background-color: #f9f9f9; /* Light gray for odd rows */
-  }
-</style>
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 {% endblock %}
 
 {% block scripts %}
