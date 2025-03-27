@@ -132,6 +132,22 @@ def payment_completed(request):
 
 
 
+
+"""
+View for barista dashboard
+"""
+
+
+
+def barista_dashboard(request):
+    print("Executing barista_dashboard from orders/views.py")  # Debugging
+    orders = Order.objects.all()  # Fetch all orders
+    print(orders)  # Debugging: Check if orders exist
+    return render(request, 'barista_dashboard.html', {'orders': orders})
+
+
+
+
 """
 View for order status on the barista dashboard
 """
@@ -179,11 +195,6 @@ def mark_order_ready_co_collect(request, order_id):
 
 
 
-"""
-View for order status on the barista dashboard
-"""
-
-
 @barista_required
 def mark_order_collected(request, order_id):
     order = get_object_or_404(Order, id=order_id)
@@ -196,42 +207,3 @@ def mark_order_collected(request, order_id):
 
 
 
-
-
-def barista_dashboard(request):
-    print("Executing barista_dashboard from orders/views.py")  # Debugging
-    orders = Order.objects.all()  #  Fetch all orders
-    print(orders)  # Debugging: Check if orders exist
-    return render(request, 'barista_dashboard.html', {'orders': orders})
-
-
-
-"""
-View to barista dashboard new
-"""
-
-"""
-@barista_required
-def barista_dashboard(request):
-    # Get all orders that baristas can manage, you can adjust the filter as needed
-    orders = Order.objects.all().order_by("created")
-
-    # Get a specific order by ID for displaying on the dashboard
-
-    order_id = request.GET.get('order_id')  # Getting order_id from URL query parameters
-    if order_id:
-        order = get_object_or_404(Order, id=order_id)
-        return render(request, 'staff_account/barista_dashboard.html', {'orders': orders, 'order': order})
-
-    return render(request, 'staff_account/barista_dashboard.html', {'orders': orders})
-
-
-Barista dashboard, retrieve from the database
-
-@barista_required
-def barista_dashboard(request):
-    # Filter orders to only show those with 'Pending' status (or 'Paid' and 'Pending' if needed)
-    orders = Order.objects.all().order_by("created")
-    return render(request, 'staff_account/barista_dashboard.html', {'orders': orders})
-
-"""

@@ -20,7 +20,6 @@ urlpatterns = [
    # custom views:
 
     path('register/', views.user_register, name='register'),
-    #path('barista_dashboard/', views.barista_dashboard_account, name='barista_dashboard'),
     path('account/barista_dashboard/', orders.views.barista_dashboard, name='barista_dashboard'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('staff_login/', views.staff_login, name='staff_login'),

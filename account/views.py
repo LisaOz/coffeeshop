@@ -130,18 +130,3 @@ def staff_logout(request):
     return redirect(settings.STAFF_LOGOUT_REDIRECT_URL)  # Redirect to staff login after logout
 
 
-"""
-Barista dashboard_view
-
-
-
-@login_required
-def barista_dashboard_account(request):
-    print("Executing barista_dashboard from accounts/views.py")  # Debugging
-
-    if not request.user.groups.filter(name="Barista").exists():
-        messages.error(request, "You are not authorized to access this page.")
-        return redirect('shop:home')
-
-    orders = Order.objects.filter(status__in=["paid", "pending"]).order_by("created")
-    return render(request, 'staff_account/barista_dashboard.html', {'orders': orders}) """
