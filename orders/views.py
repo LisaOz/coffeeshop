@@ -168,7 +168,7 @@ def update_order_status(request, order_id):
             new_status = request.POST.get("status")
 
             # Ensure new status is valid
-            valid_statuses = ["Pending", "Preparing", "Ready to Collect", "Collected"]
+            valid_statuses = [Order.PENDING, Order.PREPARING, Order.READY_TO_COLLECT, Order.COLLECTED]
             if new_status in valid_statuses:
                 order.status = new_status
                 order.save()

@@ -29,11 +29,13 @@ class Order(models.Model):
     # Status field for order progress
     PENDING = 'Pending'
     PREPARING = 'Preparing'
+    READY_TO_COLLECT = 'Ready to Collect'
     COLLECTED = 'Collected'
 
     ORDER_STATUS_CHOICES = [
         (PENDING, 'Pending'),
         (PREPARING, 'Preparing'),
+        (READY_TO_COLLECT, 'Ready to Collect'),
         (COLLECTED, 'Collected'),
     ]
 
