@@ -1,0 +1,67 @@
+{% extends "admin/base_site.html" %}
+
+{% block title %}Barista Dashboard - Coffee Shop{% endblock %}
+
+{% block content %}
+<h2>Welcome, {{ request.user.username }} (Barista)</h2>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}success{% endif %}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<div class="module">
+  <h1>Order List</h1>
+  <table style="width:100%">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Customer Name</th>
+        <th>Items</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+        <tr class="{% if order.status == 'Pending' %}pending{% elif order.status == 'Ready to Collect' %}ready-to-collect{% elif order.status == 'Collected' %}collected{% endif %}">
+          <td>{{ order.id }}</td>
+          <td>{{ order.first_name }} {{ order.last_name }}</td>
+          <td>
+            {% for item in order.items.all %}
+              {{ item.product.name }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+          </td>
+          <td>{{ order.status }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="4">No orders available.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<p>Total Pending Orders: {{ orders|length }}</p>
+
+{% endblock %}
+
+{% block styles %}
+<style>
+  .pending {
+    background-color: #f8d7da; /* Light red for pending */
+  }
+  .ready-to-collect {
+    background-color: #fff3cd; /* Light yellow for ready to collect */
+  }
+  .collected {
+    background-color: #d4edda; /* Light green for collected */
+  }
+  tr:nth-child(odd) {
+    background-color: #f9f9f9; /* Light gray for odd rows */
+  }
+</style>
+{% endblock %}

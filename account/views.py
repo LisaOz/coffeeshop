@@ -10,15 +10,11 @@ from coffeeshop import settings
 from orders.models import Order
 from .forms import LoginForm
 
-
-
-# Create your views here.
-
-
 """
 View for user login
-
 """
+
+
 def user_login(request):
     # if the user submits the form with the POST request, the form is instantiated with the submitted data
     # with the LoginForm(request.POST), then validated with form.is_valid(). If invalid, the error message is displayed
@@ -39,7 +35,7 @@ def user_login(request):
                 if user.is_active:
                     login(request, user)
                     return redirect('account:dashboard')
-                    #return HttpResponse('User authenticated successfully')  # returns the user object
+
                 else:
                     return HttpResponse('Disabled account')
             else:
@@ -47,7 +43,6 @@ def user_login(request):
     else:
         form = LoginForm()
     return render(request, 'account/login.html', {'form': form})
-
 
 
 """
@@ -59,7 +54,7 @@ def user_register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():  # if form is valid
-            user = form.save() # save the new user
+            user = form.save()  # save the new user
             login(request, user)  # Log the user in after successful registration
 
             # Check if there's a 'next' URL to redirect the user to
@@ -70,16 +65,13 @@ def user_register(request):
     return render(request, 'registration/register.html', {'form': form})
 
 
-
 """
-View for dashboard
+View for user dashboard
 """
 
 
-# the decorator is used to check if the current user is authenticated.
-# If the user is not authenticated, it redirects the user to the login URL.
-# Login view redirects users tp the URL they were trying to access by using
-# hidden <input> HTML element 'next' in Login template
+# the decorator is used to check if the current user is authenticated. If the user is not authenticated, it redirects
+# to the login URL. Login view redirects user to the next URL using hidden <input> HTML element 'next' in Login template
 
 
 @login_required
@@ -88,7 +80,6 @@ def dashboard(request):
     user_orders = Order.objects.filter(user=request.user)  # Get orders of the logged-in user
 
     return render(request, 'dashboard.html', {'user_orders': user_orders})  # Pass user_orders variable to the template
-
 
 
 # View to see account details and change the password
@@ -107,7 +98,6 @@ def account_details(request):
 
     # Render the page with both the user info and the password form
     return render(request, 'registration/account_details.html', {'user': request.user, 'password_form': password_form})
-
 
 
 """
@@ -134,18 +124,24 @@ def staff_login(request):
 View for staff logout
 """
 
+
 def staff_logout(request):
     logout(request)
     return redirect(settings.STAFF_LOGOUT_REDIRECT_URL)  # Redirect to staff login after logout
 
+
 """
 Barista dashboard_view
-"""
+
+
+
 @login_required
-def barista_dashboard(request):
+def barista_dashboard_account(request):
+    print("Executing barista_dashboard from accounts/views.py")  # Debugging
+
     if not request.user.groups.filter(name="Barista").exists():
         messages.error(request, "You are not authorized to access this page.")
         return redirect('shop:home')
 
     orders = Order.objects.filter(status__in=["paid", "pending"]).order_by("created")
-    return render(request, 'staff_account/barista_dashboard.html', {'orders': orders})
+    return render(request, 'staff_account/barista_dashboard.html', {'orders': orders}) """

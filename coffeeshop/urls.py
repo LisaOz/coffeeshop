@@ -18,12 +18,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from orders.views import barista_dashboard
 
 urlpatterns = [
     path('admin/', admin.site.urls), # url for admin site
-    #path('', include('shop.urls')),
     path('account/', include('account.urls')),  # url for login into account
-
+    path('account/barista_dashboard/', barista_dashboard, name='barista_dashboard'), # url for barista dashboard
     path('cart/', include('cart.urls', namespace='cart')),  # this url is more restrictive, include it before shop.url
     path('orders/', include('orders.urls', namespace='orders')),
     path('payment/', include('payment.urls', namespace='payment')),  # url pattern for the payment application
