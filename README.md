@@ -134,6 +134,10 @@ The Django admin interface provides the following features for administrators:
 - **PDF Receipts**: Orders are confirmed with a PDF receipt that is sent to the user’s email. This feature is implemented with the console output and can be modified for    sending emails by changing the EMAIL_BACKEND in the project's settings.
 
 
+## Barista Interface
+The Barista Dahsboard provides the posibility for the users listed in the group 'Barista' to see the customer name, order id and and the order items when the order is placed and paid.
+The orders are served in order of being placed, and by default are set to 'Pending'. The Barista has the possibilty to change the status of the order from 'Pending' to 'Ready to Collect' and to 'Collected'.
+
 ## Third-Party Integrations
 
 - **Stripe**: Stripe API is used for processing payments securely. 
