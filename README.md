@@ -213,7 +213,7 @@ It offers a set of RESTful APIs that handle transactions, refunds, subscriptions
 
 ## Acknowledgements
    
-I would like to express my gratitude to **Antonio Mele** for his guidance and insights provided in the book "Django 5 by example", which was a helpful tool in the    development of this coffeeshop website.
+I would like to express my gratitude to **Antonio Mele** for his guidance and insights provided in the book "Django 5 by example", which was a helpful tool in the    development of this coffeeshop website. Besides, the developers of Stripe API and Codeium open-source plugin which helps in the code development and testing the program.
 
 
 ## License
