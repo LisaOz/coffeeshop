@@ -6,7 +6,19 @@ body {
     font-family: helvetica, sans-serif;
     background-color: #f5ebe0; /* Light beige background */
     color: #3e2723; /* Dark brown text */
-    border: 2px solid red; /* Temporary debug border */
+
+
+    /* Apply background image globally */
+    background-image: url('http://127.0.0.1:8000/static/img/Background.png'); /* Path to the background image */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* keeps the background fixed */
+    filter: grayscale(80%) brightness(60%); /* Muted effect */
+}
+
+/* Apply bright background image only on the homepage */
+body.home {
+    filter: grayscale(0%) brightness(100%); /* Full color and brightness */
 }
 
 /* Headings */

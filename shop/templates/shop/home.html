@@ -6,14 +6,14 @@
 <div class="container text-center">
     <h1>Welcome to the Coffee Shop!</h1>
 
-    <!-- Staff Login Button (Only Visible When Not Logged In) -->
+    <!-- Staff login button (visible only when used is not logged in) -->
     {% if not request.user.is_authenticated %}
         <div class="btn-group">
             <a href="{% url 'account:staff_login' %}" class="btn btn-warning">Staff Login</a>
         </div>
     {% endif %}
     <hr>
-    <!-- Go to Shop Button -->
+    <!-- Go to shop button -->
     <div class="btn-group">
         <a href="{% url 'shop:product_list' %}" class="btn btn-success">Continue to the Shop</a>
     </div>

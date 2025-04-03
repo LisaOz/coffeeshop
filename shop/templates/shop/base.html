@@ -9,6 +9,7 @@
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
 </head>
 <body>
+<body class="{% if request.path == '/' %}home{% endif %}">
     <div id="header">
         <a href="/" class="logo">Coffee Shop</a>
 
