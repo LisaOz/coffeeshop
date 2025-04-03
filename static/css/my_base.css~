@@ -4,21 +4,24 @@ body {
     margin: 0;
     padding: 0;
     font-family: helvetica, sans-serif;
-    background-color: #f5ebe0; /* Light beige background */
+
     color: #3e2723; /* Dark brown text */
 
+    /* Global background for all pages */
 
-    /* Apply background image globally */
-    background-image: url('http://127.0.0.1:8000/static/img/Background.png'); /* Path to the background image */
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed; /* keeps the background fixed */
-    filter: grayscale(80%) brightness(60%); /* Muted effect */
+    background-image: url("{% static 'img/background.png' %}");
+    background-size: cover; /* Ensure that the image covers the entire background */
+    background-position: center; /* Center the image */
+    background-attachment: fixed; /* Keep the background fixed when scrolling */
+    filter: grayscale(100%) blur(5px); /* Apply muted effect */
+    position: relative;
+    z-index: 0; /* Ensures other content layers are above the background */
+
 }
-
-/* Apply bright background image only on the homepage */
+/* Bright background for the homepage */
 body.home {
-    filter: grayscale(0%) brightness(100%); /* Full color and brightness */
+    background-image: url("{% static 'img/background.png' %}");
+    filter: none; /* Remove grayscale and blur for the homepage */
 }
 
 /* Headings */
@@ -381,61 +384,3 @@ footer {
     margin-bottom: 1px; /* margin between fields */
     gap: 1px; /*  gap between form fields */
 }
-
-.order-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.order-item {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.order-header {
-    font-size: 18px;
-    font-weight: bold;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
-
-.order-status {
-    background-color: #ffcc00;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-weight: bold;
-}
-
-.order-details {
-    font-size: 14px;
-    color: #555;
-}
-
-.order-total {
-    font-weight: bold;
-}
-
-.order-date {
-    color: #888;
-    font-style: italic;
-}
-
-
-.pending {
-    background-color: #ffa500; /* Orange */
-  }
-  .preparing {
-    background-color: #ffff00; /* Yellow */
-  }
-  .ready_to_collect {
-    background-color: #00ff00; /* Bright green */
-  }
-  .collected {
-    background-color: #90ee90; /* Muted green */
-  }
