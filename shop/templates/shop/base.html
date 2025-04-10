@@ -11,41 +11,43 @@
 </head>
 
 <body class="home">
-    <div id="header">
-        <a href="/" class="logo">Coffee Shop</a>
+  <!-- Content wrapper, used to keep the content above the background overlay -->
+    <div class="content-wrapper">
+        <div id="header">
+            <a href="/" class="logo">Coffee Shop</a>
 
-        <span class="user">
-            {% if request.user.is_authenticated %}
-                 Hello {{ request.user.first_name|default:request.user.username }},
-                <form action="{% url 'account:logout' %}" method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-link">Logout</button>
-                </form>
+            <span class="user">
+                {% if request.user.is_authenticated %}
+                    Hello {{ request.user.first_name|default:request.user.username }},
+                    <form action="{% url 'account:logout' %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-link">Logout</button>
+                    </form>
 
-            {% else %}
-                <a href="{% url 'account:login' %}" class="btn btn-primary">Log in</a>
-            {% endif %}
-        </span>
-    </div>
-
-    <div id="subheader">
-        <div class="cart">
-            {% with total_items=cart|length %}
-                {% if total_items > 0 %}
-                    Your Cart:
-                    <a href="{% url 'cart:cart_detail' %}">
-                        {{ total_items }} item{{ total_items|pluralize }}, £{{ cart.get_total_price }}
-                    </a>
-                {% elif not order %}
-                    Your cart is empty
+                {% else %}
+                    <a href="{% url 'account:login' %}" class="btn btn-primary">Log in</a>
                 {% endif %}
-            {% endwith %}
+            </span>
         </div>
-    </div>
 
-    <div id="content">
-        {% block content %}
-        {% endblock %}
-    </div>
-</body>
+        <div id="subheader">
+            <div class="cart">
+                {% with total_items=cart|length %}
+                    {% if total_items > 0 %}
+                        Your Cart:
+                        <a href="{% url 'cart:cart_detail' %}">
+                            {{ total_items }} item{{ total_items|pluralize }}, £{{ cart.get_total_price }}
+                        </a>
+                    {% elif not order %}
+                        Your cart is empty
+                    {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+
+        <div id="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
 </html>

@@ -4,32 +4,52 @@ body {
     margin: 0;
     padding: 0;
     font-family: helvetica, sans-serif;
-
-    color: #3e2723; /* Dark brown text */
-
-    /* Global background for all pages */
-
-    background-image: url("/static/img/coffee_background.png");
-    background-size: cover; /* Ensure that the image covers the entire background */
-    background-position: center; /* Center the image */
-    background-attachment: fixed; /* Keep the background fixed when scrolling */
-    filter: grayscale(100%) blur(5px); /* Apply muted effect */
-    position: relative;
-    z-index: 0; /* Ensures other content layers are above the background */
-
+    color: #f70000; /* Bright orange text */
 }
-/* Bright background for the homepage */
+
+/* Warm brown overlay for the homepage */
 body.home {
-    background-image: url("/static/img/coffee_background.png");
-    filter: none; /* Remove grayscale and blur for the homepage */
-
+    background-color: rgba(101, 67, 33, 0.4); /* Semi-transparent warm brown */
+    background-image: url("/static/img/coffee_background_fade.png");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    opacity: 1; /* no fading on home page */
+    background-repeat: no-repeat;
+    background-size: 100% 80%; /* cover 2/3 of the page */
+    background-position: bottom; /* anchor the image to the bottom */
+    background-attachment: fixed;
+    opacity: 1;
 
 }
+
+
+
+
+/* Warm brown overlay for the homepage */
+body.home::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(101, 67, 33, 0.4); /* Semi-transparent warm brown */
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* All page content */
+.content-wrapper {
+    position: relative;
+    z-index: 1;
+}
+
 /* Headings */
 body h1, h2, h3, h4, h5, h6 {
     font-family: 'Ubuntu', sans-serif;
     font-weight: normal;
-    color: #4e342e; /* Deep brown */
+    color: #f48909; /* Bright orange */
 }
 
 /* Links */
@@ -106,9 +126,12 @@ tbody td.num, .product-list .item img, .order-items li {
 }
 
 .product-list .item img {
-    width: 270px;
-    height: 250px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
+    border: 2px solid white;
+    border-radius: 8px; /* rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* shadow effect */
 }
 
 /* Forms */
@@ -374,14 +397,4 @@ footer {
     padding: 5px 2px;
     border-radius: 5px;
     border: 1px solid #ccc;
-    font-size: 14px;
-    background-color: #f5ebe0; /* Match background color */
-}
-
-/* space between fields */
-.order-form .form-fields {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1px; /* margin between fields */
-    gap: 1px; /*  gap between form fields */
-}
+    font-size:
