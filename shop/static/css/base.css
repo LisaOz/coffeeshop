@@ -4,30 +4,23 @@ body {
     margin: 0;
     padding: 0;
     font-family: helvetica, sans-serif;
-    color: #f70000; /* Bright orange text */
+    color: #3E2723; /* brown text */
 }
 
 /* Warm brown overlay for the homepage */
 body.home {
     background-color: rgba(101, 67, 33, 0.4); /* Semi-transparent warm brown */
-    /*background-image: url("/static/img/coffee_background_fade.png"); */
-
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    opacity: 1; /* no fading on home page */
+    opacity: 1; /* no fading */
     background-repeat: no-repeat;
-    background-size: 100% 80%; /* cover 2/3 of the page */
+    background-size: 80% 80%; /* cover 2/3 of the page */
     background-position: bottom; /* anchor the image to the bottom */
     background-attachment: fixed;
     opacity: 1;
 
 }
-
-
-
-
-
 
 
 /* Headings */
@@ -126,7 +119,7 @@ tbody td.num, .product-list .item img, .order-items li {
 form p label, .order-form .form-fields {
     font-size: 16px;
     padding-bottom: 4px;
-    color: #5d4037;
+    color: #5d4037; /* dark brown */
 }
 
 form p input,
@@ -135,7 +128,9 @@ form p textarea,
 .order-form input,
 .order-form select,
 .order-form textarea {
-    width: 80%;
+    width: 100%;
+    max-width: 301px;
+    box-sizing: border-box; /* so border don’t exceed max-width */
     padding: 6px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -265,6 +260,7 @@ form p textarea,
 
 .product-detail {
     text-align: justify;
+    /*text-color: #5d4037; /* dark brown */
 }
 
 .product-detail .price {
@@ -386,3 +382,6 @@ footer {
     border-radius: 5px;
     border: 1px solid #ccc;
     font-size:
+
+
+}

@@ -23,6 +23,7 @@ from orders.views import barista_dashboard
 urlpatterns = [
     path('admin/', admin.site.urls), # url for admin site
     path('account/', include('account.urls')),  # url for login into account
+    path('account/', include('django.contrib.auth.urls')),  # django-provided authentication framework
     path('orders/barista_dashboard/', barista_dashboard, name='barista_dashboard'), # url for barista dashboard
     path('cart/', include('cart.urls', namespace='cart')),  # this url is more restrictive, include it before shop.url
     path('orders/', include('orders.urls', namespace='orders')),

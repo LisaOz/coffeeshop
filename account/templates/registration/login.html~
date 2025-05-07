@@ -1,0 +1,33 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}Log in{% endblock %}
+
+{% block content %}
+    <h1>Log in</h1>
+
+    {% if form.errors %}
+    <p>
+        Your username and password do not match. Please try again.
+    </p>
+    {% else %}
+    <p>
+        Please use this form to log in.
+        if you do not have an account, <a href="{% url 'account:register' %}">register here</a>
+        <p><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+    </p>
+    {% endif %}
+    <div class="login-form">
+        <form action="{% url 'account:login' %}" method="post">
+            {{ form.as_p}}
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next|default:'/account/dashboard/' }}" />
+            <p><input type="submit" value="Login"></p>
+
+             {% if not request.user.is_authenticated %}
+
+    {% endif %}
+        </form>
+
+    </div>
+{% endblock %}

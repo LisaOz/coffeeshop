@@ -6,11 +6,9 @@
     <h2>Staff Login</h2>
 
     {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}success{% endif %}">
-                {{ message }}
-            </div>
-        {% endfor %}
+        <div class="alert alert-{% if messages.0.tags == 'error' %}danger{% else %}success{% endif %}">
+            {{ messages.0 }}
+        </div>
     {% endif %}
 
     <form method="post">

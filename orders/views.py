@@ -1,4 +1,6 @@
 from functools import wraps
+
+from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.staticfiles import finders
@@ -46,6 +48,7 @@ View for the 'order_create'
 """
 
 
+
 def order_create(request):
 
     cart = Cart(request)  # get the current cart from the session cart
@@ -54,6 +57,10 @@ def order_create(request):
         form = OrderCreateForm(request.POST)
         if form.is_valid():  # create an order and associate it with the logged-in user
             order = form.save(commit=False)
+
+            if not request.user.is_authenticated:
+                messages.error(request, "Please, log in to place the order")
+                return redirect('account:login')  # Redirect to login page if not authenticated
             order.user = request.user  # Associate the order with the logged-in user
             order.save()  # save the order into the database
             print(f"New order created with status: {order.status}")
