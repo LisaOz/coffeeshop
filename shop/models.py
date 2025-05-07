@@ -38,7 +38,9 @@ class Category(models.Model):
 
 
 """
-Product model with fields category (Foreign Key to the Category model, one-to-many relationship; name, slug, image, description, price, availability, created, updated).
+Product model with fields category (Foreign Key to the Category model, 
+one-to-many relationship; name, slug, image, description, price, 
+                        availability, created, updated).
 """
 
 

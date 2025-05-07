@@ -38,14 +38,21 @@ def product_list(request, category_slug=None):
 
 # Code to retrieve and display a single product by id and slug
 
-
+"""
+View function that displays a single product. It takes in
+  - `request`: the HTTP request object.
+  - `id`: the primary key of the product.
+  - `slug`: the human-readable part of the product URL.
+"""
 def product_detail(request, id, slug):
-    product = get_object_or_404(
-        Product, id=id, slug=slug, available=True
+    product = get_object_or_404(  # if no product is found - raise 404 Not Found
+        Product, id=id, slug=slug, available=True  # Fetch from the database matching
     )
 
     # Adding to the cart the button 'Add to cart'
-    cart_product_form = FormToAddProduct()
+    cart_product_form = FormToAddProduct()  # Create an instance of the form to add to the cart
+
+    # Renders the 'details.html' template from shop/product/ folder
     return render(
         request,
         'shop/product/detail.html',

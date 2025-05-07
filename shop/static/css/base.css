@@ -10,7 +10,8 @@ body {
 /* Warm brown overlay for the homepage */
 body.home {
     background-color: rgba(101, 67, 33, 0.4); /* Semi-transparent warm brown */
-    background-image: url("/static/img/coffee_background_fade.png");
+    /*background-image: url("/static/img/coffee_background_fade.png"); */
+
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -26,27 +27,14 @@ body.home {
 
 
 
-/* Warm brown overlay for the homepage */
-body.home::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(101, 67, 33, 0.4); /* Semi-transparent warm brown */
-    z-index: 0;
-    pointer-events: none;
-}
 
-/* All page content */
-.content-wrapper {
-    position: relative;
-    z-index: 1;
-}
+
 
 /* Headings */
+
 body h1, h2, h3, h4, h5, h6 {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* Shadow effect */
+
     font-family: 'Ubuntu', sans-serif;
     font-weight: normal;
     color: #f48909; /* Bright orange */
