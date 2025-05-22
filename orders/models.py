@@ -73,7 +73,9 @@ class Order(models.Model):
             path = '/test/'  # Stripe path for test payments
         else:
             path = '/'  # Stripe path for real payments
-        return f'https:dashboard.stripe.com{path}payments/{self.stripe_id}'
+
+        return f"https://dashboard.stripe.com/test/payments/{self.stripe_id}"
+        # return f'https:dashboard.stripe.com{path}payments/{self.stripe_id}'
         # url = f'https://dashboard.stripe.com/test/payments/{obj.stripe_id}
 
         # Patterns for payments in the production env: https://dashboard.stripe.com/payments/{id}

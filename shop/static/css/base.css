@@ -15,7 +15,7 @@ body.home {
     background-attachment: fixed;
     opacity: 1; /* no fading */
     background-repeat: no-repeat;
-    background-size: 80% 80%; /* cover 2/3 of the page */
+    background-size: 100% 83%; /* cover 2/3 of the page */
     background-position: bottom; /* anchor the image to the bottom */
     background-attachment: fixed;
     opacity: 1;
@@ -24,7 +24,14 @@ body.home {
 
 
 /* Headings */
+body h1 {
+ text-shadow: 1px 1px 3px rgba(0, 0, 1, 1); /* Shadow effect */
 
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: normal;
+    color: #f48909; /* Bright orange */
+    font-size : 60px;
+}
 body h1, h2, h3, h4, h5, h6 {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* Shadow effect */
 
