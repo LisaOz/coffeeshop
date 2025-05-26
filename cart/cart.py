@@ -2,7 +2,7 @@ from django.conf import settings
 from decimal import Decimal
 from shop.models import Product
 
-# Cart class that allow the user to manage the shopping cart
+# Cart class to allow the user to manage the shopping cart
 class Cart:
     def __init__ (self, request):
         self.session = request.session # initialise the cart with a request object

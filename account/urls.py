@@ -1,4 +1,3 @@
-
 from django.contrib.auth import views as auth_views
 from django.urls import path
 
@@ -9,17 +8,13 @@ from django.contrib.auth import views as auth_views
 
 app_name = 'account'  # define the namespace
 
-
-    # Django-provided authentication framework views:
-
-
+# Django-provided authentication framework views:
 
 urlpatterns = [
     # Existing URLs
     path('account_details/', views.account_details, name='account_details'),
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-
 
     # Password reset views
 
@@ -35,4 +30,3 @@ urlpatterns = [
     path('staff_login/', views.staff_login, name='staff_login'),
     path('staff_logout/', views.staff_logout, name='staff_logout'),
 ]
-
