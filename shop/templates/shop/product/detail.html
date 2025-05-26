@@ -13,6 +13,9 @@
             </a>
         </h2>
         <p class="price">£{{ product.price }}</p>
+            <div class="additional-info">
+                <p>In stock: Available</p>
+            </div>
         <form action="{% url 'cart:cart_add' product.id %}" method="post">
             {{ cart_product_form }}
             {% csrf_token %}

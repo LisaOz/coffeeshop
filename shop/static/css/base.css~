@@ -262,7 +262,7 @@ form p textarea,
 
 .product-list .item img {
     width: 100%;
-
+    aspect-ratio: 1 / 1; /* Makes image square */
     object-fit: cover;   /* Image fills the square without distortion */
     margin-bottom: 8px;
 }
