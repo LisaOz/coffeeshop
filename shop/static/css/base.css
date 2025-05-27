@@ -113,14 +113,7 @@ tbody td.num, .product-list .item img, .order-items li {
     text-align: center;
 }
 
-.product-list .item img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border: 2px solid white;
-    border-radius: 8px; /* rounded corners */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* shadow effect */
-}
+
 
 /* Forms */
 form p label, .order-form .form-fields {
@@ -251,22 +244,51 @@ form p textarea,
     overflow: hidden;
 }
 
-/* Product List */
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
 .product-list .item {
-    width: 25%;
-    padding: 10px 20px 10px 0;
-    float: left;
+    flex: 1 1 calc(33% - 12px); /* 3 items per row with spacing */
+    box-sizing: border-box;
+    padding: 12px;
     text-align: center;
     line-height: 1.2;
 }
 
 .product-list .item img {
-    width: 100%;
-
-    object-fit: cover;   /* Image fills the square without distortion */
-    margin-bottom: 8px;
+    width: 100%; /* fills the container */
+    height: 150px;
+    object-fit: cover;
+    border: 2px solid white;
+    border-radius: 8px; /* rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* shadow effect */
 }
 
+/* Tablet view: 2 items per row */
+@media (max-width: 768px) {
+  .product-list .item {
+    flex: 1 1 calc(50% - 12px);
+  }
+}
+
+/* Small Mobile: 1 item per row */
+@media (max-width: 400px) {
+  .product-list {
+    padding: 8px; /* slightly smaller on small screens */
+  }
+
+  .product-list .item {
+    flex: 1 1 100%;
+  }
+}
 .product-detail {
     text-align: justify;
 
