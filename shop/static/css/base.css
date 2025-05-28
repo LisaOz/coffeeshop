@@ -25,14 +25,26 @@ body.home {
 
 /* Headings */
 body h1 {
- text-shadow: 1px 1px 3px rgba(0, 0, 1, 1); /* Shadow effect */
-
-    font-family: 'Ubuntu', sans-serif;
+   font-family: 'Ubuntu', sans-serif;
     font-weight: normal;
-    color: #f48909; /* Bright orange */
-    font-size : 60px;
+    font-size: 60px;
+    color: color: #ffff33; /* Base: strong yellow-orange */
+    text-shadow:
+        0 0 5px #fff,
+        0 0 10px #ffd700,  /* gold */
+        0 0 15px #ffae00,  /* amber-gold */
+        0 0 20px #ff9900,  /* rich yellow-orange */
+        0 0 30px #ff8800,  /* deep golden-orange */
+        0 0 40px #ff7700;  /* deeper edge glow */
+        padding: 4px 8px;
+    border-radius: 4px;
+
+
 }
-body h1, h2, h3, h4, h5, h6 {
+    /*background-color: rgba(255, 255, 255, 0.1); /* subtle background to enhance glow */
+
+}
+body h2, h3, h4, h5, h6 {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* Shadow effect */
 
     font-family: 'Ubuntu', sans-serif;
