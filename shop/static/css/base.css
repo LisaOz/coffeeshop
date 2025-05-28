@@ -157,6 +157,13 @@ form p textarea,
 
 /* Sidebar */
 #sidebar {
+
+    width: 100%;
+    max-width: 300px;
+    flex: 1;
+}
+
+#sidebar {
     width: 220px;
     padding: 30px 20px 0 0;
     float: left;
@@ -179,6 +186,28 @@ form p textarea,
 
 #sidebar ul li.selected a {
     color: #fff8e1;
+}
+
+#sidebar {
+    width: 220px;
+    padding: 30px 20px 0 0;
+    float: left;
+    box-sizing: border-box;
+}
+
+/* When screen is 700px or less */
+@media (max-width: 700px) {
+    #sidebar {
+        width: calc(50% - 12px);
+        float: none;
+    }
+}
+
+/* When screen is 400px or less */
+@media (max-width: 400px) {
+    #sidebar {
+        width: 25%;
+    }
 }
 
 /* Main Section */
@@ -268,7 +297,7 @@ form p textarea,
 }
 
 .product-list .item {
-    flex: 1 1 calc(33% - 12px); /* 3 items per row with spacing */
+    flex: 1 1 calc(33% - 10px); /* 3 items per row with spacing */
     box-sizing: border-box;
     padding: 12px;
     text-align: center;
@@ -277,7 +306,7 @@ form p textarea,
 
 .product-list .item img {
     width: 100%; /* fills the container */
-    height: 150px;
+    height: 200px;
     object-fit: cover;
     border: 2px solid white;
     border-radius: 8px; /* rounded corners */
@@ -294,6 +323,7 @@ form p textarea,
 /* Small Mobile: 1 item per row */
 @media (max-width: 400px) {
   .product-list {
+  flex: 1 1 calc(20% - 12px);
     padding: 8px; /* slightly smaller on small screens */
   }
 
