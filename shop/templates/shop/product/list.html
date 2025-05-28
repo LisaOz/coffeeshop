@@ -12,6 +12,7 @@ base.html-->
 
 {% block content %}
     <div id="sidebar">
+        <h2>{% if category %}{{ category.name }}{% else %}Our Menu{% endif %}</h2>
         <h3>Categories</h3>
         <ul>
             <li {% if not category %}class="selected"{% endif %}>
@@ -26,7 +27,7 @@ base.html-->
         </ul>
     </div>
     <div id="main" class="product-list">
-        <h1>{% if category %}{{ category.name }}{% else %}Our Menu{% endif %}</h1>
+
         {% for product in products %}
             <div class="item">
                 <a href="{{ product.get_absolute_url }}">
